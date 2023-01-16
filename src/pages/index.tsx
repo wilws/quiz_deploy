@@ -7,7 +7,7 @@ export default function Home() {
         <title>CarbonCode NextJS Tech Test</title>
       </Head>
       <main>
-        <h1 className='text-6xl text-white font-semibold'>
+        <h1 className='text-6xl text-black font-semibold'>
           CarbonCode NextJS Tech Test
         </h1>
       </main>
