@@ -1,38 +1,17 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# CarbonCode NextJS Tech Test
 
-## Getting Started
+## Overview
 
-First, run the development server:
+Create a basic quiz application using NextJS, Prisma, TailwindCSS and React Query.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-```
+## Tasks
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+1. Create a home page which displays a list of quizzes. These should be retrieved from the API using React Query. If you click on a quiz, it should take you to the view quiz page. The home page should also have a button to create a new quiz.
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+2. A create quiz page which will have a form to input the name and three yes or no questions and their answers. When the form is submitted, it should create a new quiz in the database and redirect to the home page.
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+3. A view quiz page. This should render out the name and the questions and answers. This page will be optimized for fast loading, using incremental static regeneration to fetch the data.
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+We are looking for candidates that can implement best practices with the technologies used and create an appropriate database schema using Prisma. There is no need to go into depth with validation and error handling.
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+A blank NextJS template has been provided with all the required packages installed and set up. We are using a SQLite file for the database to make it easier to get started.
