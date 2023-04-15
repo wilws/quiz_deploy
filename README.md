@@ -8,7 +8,7 @@ git clone https://github.com/wilws/quiz_challenge.git .
 ```
 
 
-<br><br>
+<br>
 
 ## Data Seeding <br>
 If you want to have some dummy data in database, you can run the following command in terminal :
@@ -23,7 +23,7 @@ You will see the following output in terminal:
 Inserted 12 users records into table "user".
 Also created 3 questions records for each user (total 36 questions records were inserted into table "questions").
 ```
-<br><br>
+<br>
 
 ## Delete all data in database <br>
 Run the following command in terminal to delete all the data in database
