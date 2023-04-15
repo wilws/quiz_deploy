@@ -1,4 +1,47 @@
-# CarbonCode NextJS Tech Test
+
+
+
+## Clone the application <br>
+
+```
+git clone https://github.com/wilws/quiz_challenge.git .
+```
+
+
+<br><br>
+
+## Data Seeding <br>
+If you want to have some dummy data in database, you can run the following command in terminal :
+
+```diff
+npm run seed  
+```
+
+You will see the following output in terminal:
+
+```diff
+Inserted 12 users records into table "user".
+Also created 3 questions records for each user (total 36 questions records were inserted into table "questions").
+```
+<br><br>
+
+## Delete all data in database <br>
+Run the following command in terminal to delete all the data in database
+
+```diff
+npm run clear-data
+```
+
+You will see the following output in terminal:
+
+```diff
+All questions in database were deleted.
+All users in database were deleted.
+```
+
+
+
+
 
 ## Overview
 The goal of this project is to create a basic quiz application using NextJS, Prisma, TailwindCSS and React Query. The application will have three main features: a home page that displays a list of quizzes, a create quiz page that allows users to input the name and questions for a new quiz, and a view quiz page that displays the name and questions of a selected quiz.
