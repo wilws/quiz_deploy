@@ -6,18 +6,16 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
- 
-  if (req.method !== "GET") {
-    res.status(500).json({ message: "405 Method Not Allowed"});
-  }
-
   const { quizId } = req.query;
 
-  if (!quizId || isNaN(quizId as any)) return;
-  if (!Number(quizId)) return;
+  if (!quizId || isNaN(quizId as any) || Number(quizId) < 0) {
+    res.status(400).json({ message: "Bad request" });
+  }
 
-  try {
-      const quiz = await prisma.user.findUnique({
+  // GET /api/quiz/:quizId
+  if (req.method == "GET") {
+    try {
+      const user = await prisma.user.findUnique({
         where: {
           id: Number(quizId),
         },
@@ -25,13 +23,26 @@ export default async function handler(
           question: true,
         },
       });
-      res.status(200).json({ quiz });
-
-  } catch (err) {
+      res.status(200).json({ user });
+    } catch (err) {
       res.status(500).json({ message: "Failed to fetch User data" });
-  
     } finally {
       await prisma.$disconnect();
+    }
   }
-  
+
+  // DELETE /api/quiz/:quizId
+  if (req.method == "DELETE") {
+    res.status(404).json({ message: "Not found" });
+  }
+
+  // PUT /api/quiz/:quizId
+  if (req.method == "PUT") {
+    res.status(404).json({ message: "Not found" });
+  }
+
+  // PATCH /api/quiz/:quizId
+  if (req.method == "PATCH") {
+    res.status(404).json({ message: "Not found" });
+  }
 }
