@@ -3,20 +3,21 @@ type Question = {
     question: string;
     answer: string;
     createId: number;
-    createdAt: string;
+    createdAt: date;
 }
 
 type User = {
   id: number;
   name: string;
-  createdAt: string;
-  question?: [] | Array<Question>;
+  createdAt: date;
+  question: Array<Question>;
 };
 
 
 type Quiz = {
-    users: Array<User>;
+    users: any ;
     count: number;
-    cursor: string;
+    cursor?: string;
 }
+
 

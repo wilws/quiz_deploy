@@ -1,52 +1,31 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import { PrismaClient } from "@prisma/client";
-
-const prisma = new PrismaClient();
-
-
-const getFirstUserId = async (): Promise<number | boolean> => {
-
-  try {
-
-    const firstUserObj = await prisma.user.findFirst();
-    if (!firstUserObj) throw new Error("cannot Set cursor");
-
-    return firstUserObj.id;
-   
-   } catch(err) {
-    return false;
-
-   } finally {
-
-    await prisma.$disconnect();
-   }
-}
-
+import { getFirstUserId, getLastUserId } from "@/utils/db-func";
 
 
 export default async function quizApiHandler (req: NextApiRequest, res: NextApiResponse) {
- 
+  
   // GET /api/quiz
   if (req.method == "GET") {
     const { cursor } = req.query;
 
-    let _take:number = 2; // amend this no to change the no of fetch
-    let _skip:number = 0;
-
-    let firstUserId:number|boolean = await getFirstUserId();
-    if (typeof firstUserId !== "number") {
+    let lastUserId: number | boolean = await getLastUserId();
+    if (typeof lastUserId !== "number") {
       res.status(500).json({ message: "Failed to fetch User data" });
-      await prisma.$disconnect();
       return;
     }
 
-    let _cursor:number = firstUserId;
+    let _cursor: number = lastUserId;
+    let _take: number = 5; // amend this no to change the no of fetch
+    let _skip: number = 0;
 
     const cursorIdFromClient = Number(cursor);
-    if (cursorIdFromClient && cursorIdFromClient > firstUserId) {
+    if (cursorIdFromClient && cursorIdFromClient < lastUserId) {
       _cursor = cursorIdFromClient;
       _skip = 1;
     }
+
+    const prisma = new PrismaClient();
 
     try {
       const users = await prisma.user.findMany({
@@ -58,18 +37,21 @@ export default async function quizApiHandler (req: NextApiRequest, res: NextApiR
         include: {
           question: true,
         },
+        orderBy: {
+          id: "desc",
+        },
       });
 
-      const result = {
+      const result: Quiz = {
         users,
         count: users.length,
-        cursor: "",
       };
 
       if (users.length > 0) {
         const lastItemId = users[users.length - 1].id;
-        result.cursor = lastItemId.toString();
-        // result.nextPages = `${req.headers.host}/api/quiz?cursor=${lastItemId}`;
+        let firstUserId: number | boolean = await getFirstUserId();
+        if (lastItemId !== (await getFirstUserId()))
+          result.cursor = lastItemId.toString();
       }
 
       res.status(200).json(result);
@@ -78,7 +60,7 @@ export default async function quizApiHandler (req: NextApiRequest, res: NextApiR
     } finally {
       await prisma.$disconnect();
     }
-  }
+  } // End of //GET /api/quiz
 
   // POST /api/quiz
   if (req.method == "POST") {
@@ -110,5 +92,5 @@ export default async function quizApiHandler (req: NextApiRequest, res: NextApiR
     } finally {
       await prisma.$disconnect();
     }
-  }
+  } // End of //POST /api/quiz
 }

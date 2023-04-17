@@ -14,7 +14,8 @@ export default function Home() {
     status,
   } = useInfiniteQuery({
     queryKey: ["quiz"],
-    queryFn: ({pageParam}) =>  getQuizzes(pageParam),
+
+    queryFn: ({ pageParam }) => getQuizzes(pageParam),
     getNextPageParam: (lastPage, pages) => lastPage.cursor,
   });
 

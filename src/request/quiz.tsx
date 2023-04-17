@@ -1,17 +1,9 @@
 import axios from "axios";
 
+//GET /api/quiz   or
+//GET /api/quiz?cursor=:id
 export async function getQuizzes(PageParam: string | null = null): Promise<Quiz> {
-  
-  let endPoint = "api/quiz";
-  
-  if (PageParam != "undefined") {
-    endPoint = `api/quiz?cursor=${PageParam}`;
-  }
-
-  const { data } = await axios.get(endPoint);
-
-  if (!data.cursor) {
-      delete data['cursor']
-  }
-  return data;
+    const endPoint = (PageParam) ? `api/quiz?cursor=${PageParam}` : "api/quiz";
+    const { data } = await axios.get(endPoint);
+    return data;
 }
