@@ -15,9 +15,20 @@ type User = {
 
 
 type Quiz = {
-    users: any ;
-    count: number;
-    cursor?: string;
+  users: any ;
+  count: number;
+  cursor?: string;
 }
 
 
+type QuestionAnswer = {
+    question: string;
+    answer: boolean;
+}
+
+// Applied in src/request/quiz.tsx
+// createQuiz()
+type QuizInput = {
+  creatorName: string;
+  questions: Array<QuestionAnswer>;
+};

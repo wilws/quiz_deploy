@@ -7,3 +7,11 @@ export async function getQuizzes(PageParam: string | null = null): Promise<Quiz>
     const { data } = await axios.get(endPoint);
     return data;
 }
+
+
+//POST /api/quiz
+export async function postQuiz(body: QuizInput): Promise<Quiz> {
+  const endPoint = 'api/quiz';
+  const { data } = await axios.post(endPoint, body);
+  return data;
+}

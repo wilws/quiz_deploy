@@ -62,20 +62,25 @@ export default async function quizApiHandler (req: NextApiRequest, res: NextApiR
     }
   } // End of //GET /api/quiz
 
+
+  console.log(req.body)
+
   // POST /api/quiz
   if (req.method == "POST") {
-    const { name, questions, answers } = req.body;
+
+    const { creatorName, questions } = req.body;
+    const prisma = new PrismaClient();
 
     try {
       const users = await prisma.user.create({
         data: {
-          name: name,
+          name: creatorName,
         },
       });
 
       for (let i = 0; i < questions.length; i++) {
-        const question = questions[i];
-        const answer = answers[i];
+        const question = questions[i].question;
+        const answer = questions[i].answer;
 
         await prisma.question.create({
           data: {

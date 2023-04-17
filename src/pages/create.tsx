@@ -1,9 +1,19 @@
-import {useEffect, useState} from "react";
+import {useState} from "react";
 import NameInput from "../components/create/NameInput";
 import QuestionInput from "../components/create/QuestionInput";
 import ConfirmPage from "@/components/create/ConfirmPage";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { postQuiz } from "../request/quiz";
 
 const CreateQuiz = () => {
+
+const queryClient = useQueryClient();
+    const createPostMutation = useMutation({
+      mutationFn: postQuiz,
+      onSuccess: (data) => {
+        queryClient.invalidateQueries(["quiz"], { exact: true });
+      },
+    });
 
 
   // Name Input
@@ -24,15 +34,37 @@ const CreateQuiz = () => {
   const [question3, setQuestion3] = useState<string>("");
   const [answer3, setAnswer3] = useState<boolean>(true);
 
-
   const [currentPage, setCurrentPage] = useState<number>(1);
   
 
-  function submitHandler(e: React.FormEvent<HTMLInputElement>) {
-    e.preventDefault();
-    console.log('here')
+
+  function constructQuestionAnswerArray(): Array<QuestionAnswer> {
+    return [
+        {
+          question: question1,
+          answer: answer1,
+        },
+        {
+          question: question2,
+          answer: answer2,
+        },
+        {
+          question: question3,
+          answer: answer3,
+        },
+    ]
   }
 
+
+  function submitHandler(e: React.FormEvent<HTMLInputElement>) {
+    e.preventDefault();
+    createPostMutation.mutate({
+      creatorName,
+      questions: constructQuestionAnswerArray(),
+    });
+  }
+
+  
   return (
     <section onSubmit={submitHandler}>
       <h1>Create Quize</h1>
@@ -84,20 +116,7 @@ const CreateQuiz = () => {
           pageNo={5}
           currentPage={currentPage}
           setCurrentPage={setCurrentPage}
-          questions={[
-            {
-              question: question1,
-              answer: answer1,
-            },
-            {
-              question: question2,
-              answer: answer2,
-            },
-            {
-              question: question3,
-              answer: answer3,
-            },
-          ]}
+          questions={constructQuestionAnswerArray()}
         />
       </form>
     </section>
