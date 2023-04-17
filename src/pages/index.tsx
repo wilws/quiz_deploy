@@ -13,7 +13,7 @@ export default function Home() {
     isFetchingNextPage,
     status,
   } = useInfiniteQuery({
-    queryKey: ["quiz"],
+    queryKey: ["quizzes"],
 
     queryFn: ({ pageParam }) => getQuizzes(pageParam),
     getNextPageParam: (lastPage, pages) => lastPage.cursor,

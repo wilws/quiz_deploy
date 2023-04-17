@@ -11,7 +11,7 @@ const queryClient = useQueryClient();
     const createPostMutation = useMutation({
       mutationFn: postQuiz,
       onSuccess: (data) => {
-        queryClient.invalidateQueries(["quiz"], { exact: true });
+        queryClient.invalidateQueries(["quizzes"], { exact: true });
       },
     });
 

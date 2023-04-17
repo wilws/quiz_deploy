@@ -1,8 +1,5 @@
 
-type QuestionAnswer = {
-    question: string;
-    answer: boolean;
-}
+
 
 type PropType = {
     creatorName: string;
@@ -20,6 +17,7 @@ const ConfirmPage = (props:PropType) => {
     return (
       <>
         {currentPage == pageNo && (
+
           <section>
             <h3>name : {creatorName}</h3>
 
@@ -29,7 +27,6 @@ const ConfirmPage = (props:PropType) => {
                         {q.question} - {q.answer? "yes":"no"}
                     </div>
                 })
-
             }
 
             <button
@@ -43,6 +40,7 @@ const ConfirmPage = (props:PropType) => {
               Confirm
             </button>
           </section>
+          
         )}
       </>
     );
