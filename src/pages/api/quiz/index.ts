@@ -5,6 +5,7 @@ import { getFirstUserId, getLastUserId } from "@/utils/db-func";
 
 export default async function quizApiHandler (req: NextApiRequest, res: NextApiResponse) {
   
+
   // GET /api/quiz
   if (req.method == "GET") {
     const { cursor } = req.query;
@@ -49,21 +50,31 @@ export default async function quizApiHandler (req: NextApiRequest, res: NextApiR
 
       if (users.length > 0) {
         const lastItemId = users[users.length - 1].id;
-        let firstUserId: number | boolean = await getFirstUserId();
-        if (lastItemId !== (await getFirstUserId()))
+
+        if (lastItemId !== (await getFirstUserId())) {
           result.cursor = lastItemId.toString();
+        }
       }
 
-      res.status(200).json(result);
+
+  // setTimeout(() => {
+  //   console.log("loading");
+  //    res.status(200).json(result);
+  // }, 2000);
+
+   res.status(200).json(result);
+
+     
+
     } catch (err) {
       res.status(500).json({ message: "Failed to fetch User data" });
+
     } finally {
       await prisma.$disconnect();
     }
   } // End of //GET /api/quiz
 
 
-  console.log(req.body)
 
   // POST /api/quiz
   if (req.method == "POST") {
@@ -92,8 +103,10 @@ export default async function quizApiHandler (req: NextApiRequest, res: NextApiR
       }
 
       res.status(204);
+
     } catch (err) {
       res.status(500).json({ message: "Failed to create quiz" });
+
     } finally {
       await prisma.$disconnect();
     }

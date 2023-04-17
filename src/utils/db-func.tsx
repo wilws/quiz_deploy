@@ -18,11 +18,13 @@ export const getLastUserId = async (): Promise<number | boolean> => {
     const prisma = new PrismaClient();
     try {
         const lastUserObj = await prisma.user.findMany({
-            orderBy: { createdAt: "desc" },
+            orderBy: { id: "desc" },
             take: 1,
         });
+
         if (!lastUserObj) throw new Error("cannot Set cursor");
         return lastUserObj[0].id;
+        
     } catch (err) {
         return false;
     } finally {

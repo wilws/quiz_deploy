@@ -1,14 +1,16 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import { PrismaClient } from "@prisma/client";
+import { paramIdSanitiser } from "../../../utils/helper";
 const prisma = new PrismaClient();
 
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
+
   const { quizId } = req.query;
 
-  if (!quizId || isNaN(quizId as any) || Number(quizId) < 0) {
+  if (paramIdSanitiser(quizId) == -1) {
     res.status(400).json({ message: "Bad request" });
   }
 
@@ -17,7 +19,7 @@ export default async function handler(
     try {
       const user = await prisma.user.findUnique({
         where: {
-          id: Number(quizId),
+          id: paramIdSanitiser(quizId),
         },
         include: {
           question: true,
@@ -30,6 +32,10 @@ export default async function handler(
       await prisma.$disconnect();
     }
   }
+
+
+
+  // ---- Reserved for Extesnion ---- //
 
   // DELETE /api/quiz/:quizId
   if (req.method == "DELETE") {
@@ -45,4 +51,5 @@ export default async function handler(
   if (req.method == "PATCH") {
     res.status(404).json({ message: "Not found" });
   }
+  // ---------------------------------- //
 }

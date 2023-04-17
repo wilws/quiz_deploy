@@ -8,5 +8,5 @@ export const isPositiveInteger = (stringNum: any) => {
 
 
 export const paramIdSanitiser = (id:any):number => {
-    return (isPositiveInteger(id))? Number(id):0;
+    return (isPositiveInteger(id))? Number(id):-1;
 }
