@@ -60,7 +60,7 @@ export default async function quizApiHandler (req: NextApiRequest, res: NextApiR
   // setTimeout(() => {
   //   console.log("loading");
   //    res.status(200).json(result);
-  // }, 2000);
+  // }, 20000);
 
    res.status(200).json(result);
 

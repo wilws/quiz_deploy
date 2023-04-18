@@ -4,6 +4,8 @@ import { getQuizzes } from "../request/quiz";
 import Card from "../components/UI/Card";
 import Header from "../components/layout/Header";
 import { useEffect, useRef } from "react";
+import { Dimmer, Loader, Segment } from "semantic-ui-react";
+
 
 
 export default function Home() {
@@ -55,7 +57,9 @@ export default function Home() {
       <main className={style.main}>
         {status === "loading" ? (
           <div className="loadingPage">
-            <h1>Loading .... </h1>
+            <Dimmer active inverted>
+              <Loader inverted>Loading</Loader>
+            </Dimmer>
           </div>
         ) : status === "error" ? (
           <pre>{JSON.stringify(error)}</pre>
@@ -66,16 +70,29 @@ export default function Home() {
                 .flatMap((data) => data.users)
                 .map((user) => {
                   return (
-                    <Card
-                      key={user.id}
-                      creatorName={user.name}
-                      firstQuestion={user.question[0].question}
-                      quizNo={quizCounter++}
-                    />
+                  
+                     
+                        <Card
+                          key={user.id}
+                          creatorName={user.name}
+                          firstQuestion={user.question[0].question}
+                          quizNo={quizCounter++}
+                          userId={user.id}
+                        />
+                    
+                  
                   );
                 })}
             </ul>
-            {isFetchingNextPage && <pre> loading ...</pre>}
+            {isFetchingNextPage && (
+              <Segment>
+              <div className={style.loader}>
+              <Dimmer active inverted>
+                <Loader inverted>Loading</Loader>
+              </Dimmer>
+              </div>
+              </Segment>
+            )}
           </>
         )}
       </main>
@@ -85,9 +102,10 @@ export default function Home() {
 
 const style = {
   container: "p-4",
-  loadingPage: "p-10",
+  loadingPage: "p-2",
   main: "",
-  ul:""
+  ul:"",
+  loader:"h-16"
 };
 
   

@@ -40,7 +40,7 @@ const style = {
   myName: "font-sans mr-1 text-sm  pt-1 font-semibold text-slate-500",
   socialIcon: "",
   button:
-    "fixed right-4 top-4 text-normal tracking-tighter bg-black text-white pt-1 pb-1 pl-3 pr-3 cursor-pointer",
+    "fixed right-4 top-4 text-normal tracking-tighter bg-black text-white pt-2 pb-2 pl-3 pr-3 cursor-pointer",
 };
 
 export default Header;
