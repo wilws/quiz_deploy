@@ -19,26 +19,55 @@ const QuestionDisplay = (props:PropsType):JSX.Element => {
     }
 
    return (
-     <div>
-       <p> {question}</p>
-       <p>answer</p>
-       <button
-         onClick={() => {
-           clickAnswer(true)
-         }}
-       >
-         Yes
-       </button>
-       <button
-         onClick={() => {
-           clickAnswer(false)
-         }}
-       >
-         No
-       </button>
-     </div>
+      <div className={style.questionPage}>
+
+        <div className={style.question}>
+          <p> {question}</p>
+        </div>
+
+ 
+          <div className={style.buttonGroup}>
+
+          <button
+            className={style.button}
+            onClick={() => {
+            clickAnswer(true);
+            }}
+            >
+            Yes
+          </button>
+
+          <button
+            className={style.button}
+            onClick={() => {
+            clickAnswer(false);
+            }}
+            >
+            No
+          </button>
+
+          </div>
+       
+      </div>
    );
 }
 
 
 export default QuestionDisplay;
+
+
+const style = {
+  questionPage: `w-full h-full overflow-hiddens flex flex-col items-center`,
+
+  question: `grow bg-red w-full flex flex-col items-center justify-center text-2xl font-light text-center p-3
+  md:text-4xl md:tracking-wider 
+  lg:text-5xl lg:tracking-widest lg:pl-52 lg:pr-52`,
+
+  buttonGroup: `flex-none w-full h-44 flex flex-row justify-between p-4
+  md:pl-14 md:pr-14
+  lg:h-72 lg:w-3/5`,
+
+  button: `w-40 bg-black text-white h-10 rounded-xl
+  md:w-60 md:h-16 md:text-4xl md:font-light
+  `,
+};

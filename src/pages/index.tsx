@@ -10,7 +10,7 @@ import { Dimmer, Loader, Segment } from "semantic-ui-react";
 
 export default function Home() {
 
-   const container = useRef<HTMLHeadingElement>(null);
+  const container = useRef<HTMLHeadingElement>(null);
 
   const {
     data,
@@ -100,7 +100,7 @@ const style = {
 
   container: 
   `w-screen h-screen p-4 relative
-  xl:flex xl:flex-row xl:h-[calc(100vh+10rem)]`,
+  xl:flex xl:flex-row xl:h-[calc(100vh+2rem)]`,
 
   loadingPage: 
   `p-2`,

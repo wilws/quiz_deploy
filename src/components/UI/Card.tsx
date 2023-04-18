@@ -35,13 +35,12 @@ export default Card;
 const style = {
   li: 
   `flex flex-col w-full h-60 max-h-60 justify-top
-   md:w-1/3 md:h-80 md:max-h-80 md:justify-center md:items-center
-   
-   lg:w-1/4`,
+  md:w-1/3 md:h-80 md:max-h-80 md:justify-center md:items-center
+  lg:w-1/4`,
 
   card: 
   `border border-grey-500 rounded-md w-full h-48 max-h-48 shadow-lg shadow-grey-500/50 p-3 flex flex-col  cursor-pointer  text-black
-   md:w-64 md:h-60 md:max-h-60`,
+  md:w-64 md:h-60 md:max-h-60`,
 
   quizNo: 
   `text-2xl font-black m-0 h-7`,
@@ -50,7 +49,9 @@ const style = {
   `flex flex-col w-full h-28 max-h-28 justify-center
   md:h-40 max-h-40`,
 
-  question: `text-xl text-ellipsis overflow-hidden text-gray-500  text-center`,
+  question: 
+  `text-xl text-ellipsis overflow-hidden text-gray-500  text-center`,
 
-  name: `border-t-2 border-gray-400 h-6 pt-1 pr-1 text-right uppercase font-semibold  text-ellipsis overflow-hidden`,
+  name: 
+  `border-t-2 border-gray-400 h-6 pt-1 pr-1 text-right uppercase font-semibold  text-ellipsis overflow-hidden`,
 };

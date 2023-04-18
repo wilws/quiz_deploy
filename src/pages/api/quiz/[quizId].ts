@@ -25,7 +25,18 @@ export default async function handler(
           question: true,
         },
       });
+
+     
+      
+
+      // setTimeout(()=>{
+      //   res.status(200).json({ user });
+      // },5000)
+
       res.status(200).json({ user });
+
+      
+
     } catch (err) {
       res.status(500).json({ message: "Failed to fetch User data" });
     } finally {
