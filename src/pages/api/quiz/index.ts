@@ -17,7 +17,7 @@ export default async function quizApiHandler (req: NextApiRequest, res: NextApiR
     }
 
     let _cursor: number = lastUserId;
-    let _take: number = 5; // amend this no to change the no of fetch
+    let _take: number = 12; // amend this no to change the no of fetch
     let _skip: number = 0;
 
     const cursorIdFromClient = Number(cursor);
