@@ -76,12 +76,15 @@ export default ResultDisplay;
 
 
 const style = {
-  resultPage: `w-full h-full overflow-hiddens flex flex-col justify-center  items-center text-lg tracking-wider font-light gap-7
+  resultPage: `
+  z-50 relative w-full h-full overflow-hiddens flex flex-col justify-center  items-center text-lg tracking-wider font-light gap-7
   md:gap-20
-  lg:gap-0 lg pt-40`,
+  lg:gap-0 lg:pt-40`,
 
   backHomeBtn: `w-40 bg-black text-white h-10 rounded-xl
-  md:w-60 md:h-16 md:text-3xl md:font-light`,
+  md:w-60 md:h-16 md:text-3xl md:font-light
+  lg:w-30 lg:h-10 lg:text-xl lg:mt-10
+  `,
 
   ul: `overflow-auto 
   md:-mt-40`,
@@ -90,7 +93,7 @@ const style = {
   lg:mb-20`,
 
   description: `md:text-4xl md:font-thin
-  lg:text-5xl `,
+  lg:text-3xl `,
 
   icon: `mr-8
   md:mr-12`,

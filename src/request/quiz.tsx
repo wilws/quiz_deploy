@@ -12,14 +12,15 @@ export async function getQuizzes(PageParam: string | null = null): Promise<Quiz>
 export async function getQuiz(quizId: number | string): Promise<User> {
   const endPoint = `/api/quiz/${quizId}`
   const { data } = await axios.get(endPoint);
+
   return data.user;
 }
 
 
 // POST /api/quiz
-export async function postQuiz(body: QuizInput): Promise<Quiz> {
+export async function postQuiz(body: QuizInput): Promise<number> {
   const endPoint = 'api/quiz';
-  const { data } = await axios.post(endPoint, body);
-  return data;
+  const res = await axios.post(endPoint, body);
+  return res.status;
 }
 

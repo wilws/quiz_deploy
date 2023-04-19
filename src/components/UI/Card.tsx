@@ -1,5 +1,6 @@
-
+import { gradientColorGenerator } from "@/utils/helper";
 import Link from "next/link";
+import { useEffect, useRef } from "react";
 
 type PropsType = {
   quizNo: number;
@@ -11,20 +12,28 @@ type PropsType = {
 const Card = (props:PropsType):JSX.Element => {
 
     const { quizNo, firstQuestion, creatorName, userId } = props;
+    const divRef = useRef<HTMLDivElement>(null)
+
+    useEffect(() => {
+      const colors = gradientColorGenerator(userId);
+      if (divRef.current){
+        divRef.current.style.background = `linear-gradient(${colors[0]} 10%,${colors[1]}) 100%`;
+      }
+    }, [userId]);
 
     return (
       <li className={style.li}>
-       <Link
-          href={`/view/${userId}`}
+        <Link
+          href={`/view/${userId}?quizNo=${quizNo}`}
           style={{ textDecoration: "none" }}
         >
-        <div className={style.card}>
-          <p className={style.quizNo}>Q{quizNo}</p>
-          <div className={style.questionWrapper}>
-            <p className={style.question}>{firstQuestion}</p>
+          <div className={style.card} ref={divRef}>
+            <p className={style.quizNo}>Q{quizNo}</p>
+            <div className={style.questionWrapper}>
+              <p className={style.question}>{firstQuestion}</p>
+            </div>
+            <p className={style.name}>{creatorName}</p>
           </div>
-          <p className={style.name}>{creatorName}</p>
-        </div>
         </Link>
       </li>
     );
@@ -50,8 +59,8 @@ const style = {
   md:h-40 max-h-40`,
 
   question: 
-  `text-xl text-ellipsis overflow-hidden text-gray-500  text-center`,
+  `text-xl text-ellipsis overflow-hidden text-black font-thin  text-center`,
 
   name: 
-  `border-t-2 border-gray-400 h-6 pt-1 pr-1 text-right uppercase font-semibold  text-ellipsis overflow-hidden`,
+  `border-t-2 border-black h-6 pt-1 pr-1 text-right uppercase font-semibold  text-ellipsis overflow-hidden`,
 };

@@ -56,12 +56,6 @@ export default async function quizApiHandler (req: NextApiRequest, res: NextApiR
         }
       }
 
-
-  // setTimeout(() => {
-  //   console.log("loading");
-  //    res.status(200).json(result);
-  // }, 20000);
-
    res.status(200).json(result);
 
      
@@ -82,6 +76,8 @@ export default async function quizApiHandler (req: NextApiRequest, res: NextApiR
     const { creatorName, questions } = req.body;
     const prisma = new PrismaClient();
 
+    
+
     try {
       const users = await prisma.user.create({
         data: {
@@ -92,6 +88,7 @@ export default async function quizApiHandler (req: NextApiRequest, res: NextApiR
       for (let i = 0; i < questions.length; i++) {
         const question = questions[i].question;
         const answer = questions[i].answer;
+        
 
         await prisma.question.create({
           data: {
@@ -99,10 +96,10 @@ export default async function quizApiHandler (req: NextApiRequest, res: NextApiR
             answer,
             creatorId: users.id,
           },
-        });
+        });        
       }
 
-      res.status(204);
+      res.status(204).end();
 
     } catch (err) {
       res.status(500).json({ message: "Failed to create quiz" });

@@ -35,85 +35,155 @@ const QuestionInput = (props: PropType):JSX.Element => {
         setQuestion(event?.target.value);
     }  
 
+  if (currentPage !== pageNo) return (<></>);
 
   return (
-    <>
-      {currentPage == pageNo && (
-        <>
-          <label htmlFor="question1">{title}</label>
-          <br />
-          <textarea
-            name="question1"
-            id="question1"
-            placeholder="Type Question 1"
-            value={question}
-            onChange={textAreaOnChangeHandler}
-          />
-          <br />
-          <p>answer</p>
-          {answer ? (
-            <>
+    <div className={style.questionInputPage}>
+      <p className={style.p}>
+        <span>
+          Please set your <br />
+          <span>
+            {" "}
+            {pageNo === 2 ? "first" : pageNo === 3 ? "second" : "third"}{" "}
+          </span>
+          question and Answer
+        </span>
+      </p>
+
+      <textarea
+        name="question"
+        className={style.textarea}
+        id="question"
+        placeholder="Type your question here "
+        value={question}
+        onChange={textAreaOnChangeHandler}
+      />
+
+      <div className={style.answerGroup}>
+        <h4 className={style.h}>Answer : </h4>
+
+        {answer ? (
+          <div className={style.radioBtnGroup}>
+            <div className={style.radioBtnWithLabel}>
               <input
                 type="radio"
-                id="ans1-true"
-                name="ans1"
+                className={style.radioBtn}
+                id="ans-true"
+                name="ans"
                 value="true"
                 onChange={radioButtonOnClickHandler}
                 defaultChecked
               />
-              <label htmlFor="ans1">Yes</label>
+              <label htmlFor="ans">Yes</label>
+            </div>
+
+            <div className={style.radioBtnWithLabel}>
               <input
                 type="radio"
-                id="ans1-false"
-                name="ans1"
+                className={style.radioBtn}
+                id="ans-false"
+                name="ans"
                 value="false"
                 onChange={radioButtonOnClickHandler}
               />
-              <label htmlFor="ans1">No</label>
-            </>
-          ) : (
-            <>
+              <label htmlFor="ans">No</label>
+            </div>
+          </div>
+        ) : (
+          <div className={style.radioBtnGroup}>
+            <div className={style.radioBtnWithLabel}>
               <input
                 type="radio"
-                id="ans1-true"
-                name="ans1"
+                className={style.radioBtn}
+                id="ans-true"
+                name="ans"
                 value="true"
                 onChange={radioButtonOnClickHandler}
               />
-              <label htmlFor="ans1">Yes</label>
+              <label htmlFor="ans">Yes</label>
+            </div>
+            <div className={style.radioBtnWithLabel}>
               <input
                 type="radio"
+                className={style.radioBtn}
                 id="ans1-false"
-                name="ans1"
+                name="ans"
                 value="false"
                 onChange={radioButtonOnClickHandler}
                 defaultChecked
               />
-              <label htmlFor="ans1">No</label>
-            </>
-          )}
+              <label htmlFor="ans">No</label>
+            </div>
+          </div>
+        )}
+      </div>
 
-          <br></br>
-          <button
-            onClick={() => {
-              setCurrentPage(pageNo - 1);
-            }}
-          >
-            Back
-          </button>
+      <div className={style.buttonGroup}>
+        <button
+          className={style.button}
+          onClick={() => {
+            setCurrentPage(pageNo - 1);
+          }}
+        >
+          Back
+        </button>
 
-          <br></br>
-          <button
-            onClick={() => {
-              setCurrentPage(pageNo + 1);
-            }}
-          >
-            Next
-          </button>
-        </>
-      )}
-    </>
+        <button
+          className={
+            (!question) ? style.buttonDisable : style.button
+          }
+          onClick={() => {
+            setCurrentPage(pageNo + 1);
+          }}
+          disabled={!question}
+        >
+          Next
+        </button>
+      </div>
+    </div>
   );
 };
 
 export default QuestionInput;
+
+
+const style = {
+  questionInputPage: `w-full hf-full flex flex-col  items-center pb-10
+  md:pt-20
+  lg:pt-20`,
+
+  p: `w-full h-32 text-2xl text-center flex flex-col justify-end items-center mb-10
+  md:text-4xl md:mb-20 md:tracking-wide 
+  lg:leading-tight`,
+
+  textarea: `border-2 border-red text-left pt-10 pl-2 pr-2 w-4/5 h-48 rounded-xl text-center text-xl mb-4
+  md:h-80 md:mb-10 md:text-3xl md:text-left md:pl-4 pr-4 `,
+
+  answerGroup: `w-4/5 flex flex-row justify-between mt-6 pl-2 pr-2 mb-20
+  md:pl-3 md:pr-3 md:mb-20 `,
+
+  h: `w-1/3 text-lg tracking-wider mb-0
+  md:text-4xl `,
+
+  radioBtnGroup: `w-2/3 flex flex-row justify-end`,
+
+  radioBtn: `mr-2`,
+
+  radioBtnWithLabel: `text-xl w-20  flex flex-row justify-end items-center
+  md:text-4xl md:w-64`,
+
+  buttonGroup: `w-4/5 flex flex-row justify-between`,
+
+  button: `border-2 border-red cursor-pointer tracking-widest  w-40 bg-black text-white h-10 rounded-xl
+  md:w-64 md:h-16 md:text-3xl md:font-thin`,
+
+  buttonDisable: ` tracking-widest  w-40 bg-gray-300 text-white h-10 rounded-xl
+  md:w-64 md:h-16 md:text-3xl md:font-thin`,
+
+  exitButton: `mt-20 text-black`,
+};
+
+
+
+
+
