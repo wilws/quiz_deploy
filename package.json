@@ -8,9 +8,10 @@
     "start": "next start",
     "lint": "next lint",
     "seed": "node ./prisma/seed/run-seed.js",
+    "migrate:deploy": "prisma migrate deploy",
     "test": "jest --watch",
-    "clear-data": "node ./prisma/seed/clear-data.js"
-   
+    "clear-data": "node ./prisma/seed/clear-data.js",
+    "deploy": "npm run migrate:deploy && npm run clear-data && npm run seed && npm run build && npm run start"
   },
   "dependencies": {
     "@next/font": "13.1.2",
@@ -24,6 +25,7 @@
     "eslint": "8.32.0",
     "eslint-config-next": "13.1.2",
     "next": "13.1.2",
+    "prisma": "^4.13.0",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-social-icons": "^5.15.0",
