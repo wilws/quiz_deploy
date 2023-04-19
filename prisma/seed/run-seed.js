@@ -51,7 +51,7 @@ testData.usersData.forEach((userObj) =>{
       await prisma.$disconnect();
       console.log(
         "\x1b[32m%s\x1b[0m", 
-        `Inserted ${counter} users records into table "user".\nAlso created 3 questions records for each user (total 36 questions records were inserted into table "questions").`
+        `Inserted ${counter} users records into table "user".\nAlso created 3 questions records for each user (total ${counter * 3 } questions records were inserted into table "questions").`
       );
     } else {
       return;

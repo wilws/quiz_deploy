@@ -1,10 +1,10 @@
 {
   "compilerOptions": {
-    "target": "es5",
-    "module": "esnext",
-    // "target": "esnext",
-    // "module": "commonjs",
-    // "allowSyntheticDefaultImports": true,
+    // "target": "es5",
+    // "module": "esnext",
+    "target": "esnext",
+    "module": "commonjs",
+    "allowSyntheticDefaultImports": true,
 
     "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
@@ -25,6 +25,6 @@
       "@/*": ["./src/*", "./prisma/*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "prisma/data/test-data/users.js", "prisma/data/test-data/questions.js", "prisma/data/test-data/index.js", "prisma/run-seed.js", "prisma/data/test-data/questions..js", "prisma/data/test-data/index.js"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "prisma/data/test-data/users.js", "prisma/data/test-data/questions.js", "prisma/data/test-data/index.js", "prisma/run-seed.js", "prisma/data/test-data/questions..js", "prisma/data/test-data/index.js", "prisma/db.js"],
   "exclude": ["node_modules"]
 }

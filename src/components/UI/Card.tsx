@@ -59,7 +59,7 @@ const style = {
   md:h-40 max-h-40`,
 
   question: 
-  `text-xl text-ellipsis overflow-hidden text-black font-thin  text-center`,
+  `text-xl text-ellipsis overflow-hidden text-black text-center`,
 
   name: 
   `border-t-2 border-black h-6 pt-1 pr-1 text-right uppercase font-semibold  text-ellipsis overflow-hidden`,

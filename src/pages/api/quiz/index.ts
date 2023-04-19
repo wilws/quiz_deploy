@@ -1,6 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import { PrismaClient } from "@prisma/client";
 import { getFirstUserId, getLastUserId } from "@/utils/db-func";
+import { prisma } from "../../../db/connection";
 
 
 export default async function quizApiHandler (req: NextApiRequest, res: NextApiResponse) {
@@ -25,8 +25,6 @@ export default async function quizApiHandler (req: NextApiRequest, res: NextApiR
       _cursor = cursorIdFromClient;
       _skip = 1;
     }
-
-    const prisma = new PrismaClient();
 
     try {
       const users = await prisma.user.findMany({
@@ -56,15 +54,12 @@ export default async function quizApiHandler (req: NextApiRequest, res: NextApiR
         }
       }
 
-   res.status(200).json(result);
+    res.status(200).json(result);
 
-     
 
     } catch (err) {
       res.status(500).json({ message: "Failed to fetch User data" });
 
-    } finally {
-      await prisma.$disconnect();
     }
   } // End of //GET /api/quiz
 
@@ -74,9 +69,6 @@ export default async function quizApiHandler (req: NextApiRequest, res: NextApiR
   if (req.method == "POST") {
 
     const { creatorName, questions } = req.body;
-    const prisma = new PrismaClient();
-
-    
 
     try {
       const users = await prisma.user.create({
@@ -104,8 +96,6 @@ export default async function quizApiHandler (req: NextApiRequest, res: NextApiR
     } catch (err) {
       res.status(500).json({ message: "Failed to create quiz" });
 
-    } finally {
-      await prisma.$disconnect();
     }
   } // End of //POST /api/quiz
 }

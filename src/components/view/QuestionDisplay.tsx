@@ -55,9 +55,9 @@ export default QuestionDisplay;
 const style = {
   questionPage: `z-50 w-full h-full overflow-hiddens flex flex-col items-center relative`,
 
-  question: `grow bg-red w-full flex flex-col items-center justify-center text-2xl font-light text-center p-3
+  question: `grow bg-red w-full flex flex-col items-center justify-center text-2xl text-center p-3
   md:text-4xl md:tracking-wider 
-  lg:text-3xl lg:tracking-widest lg:pl-52 lg:pr-52 lg:font-thin`,
+  lg:text-3xl lg:tracking-widest lg:pl-52 lg:pr-52`,
 
   buttonGroup: `flex-none w-full h-44 flex flex-row justify-between p-4
   md:pl-14 md:pr-14

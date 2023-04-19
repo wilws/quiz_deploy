@@ -84,7 +84,7 @@ const style = {
   creatorName: `text-2xl uppercase
    md:text-4xl`,
 
-  badge: `rounded-xl text-xs font-thin pl-2 pr-2 ml-3 border-2 border-gray-600 text-gray-600
+  badge: `rounded-xl text-xs pl-2 pr-2 ml-3 border-2 border-gray-600 text-gray-600
   md:text-lg md:ml-5`,
 
   ul: `pl-2 pr-2 

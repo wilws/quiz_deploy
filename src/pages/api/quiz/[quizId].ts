@@ -1,7 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import { PrismaClient } from "@prisma/client";
 import { paramIdSanitiser } from "../../../utils/helper";
-const prisma = new PrismaClient();
+import { prisma } from "../../../db/connection";
+
 
 export default async function handler(
   req: NextApiRequest,
@@ -26,21 +26,13 @@ export default async function handler(
         },
       });
 
-     
-      
-
-      // setTimeout(()=>{
-      //   res.status(200).json({ user });
-      // },5000)
-
       res.status(200).json({ user });
 
       
 
     } catch (err) {
       res.status(500).json({ message: "Failed to fetch User data" });
-    } finally {
-      await prisma.$disconnect();
+   
     }
   }
 

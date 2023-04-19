@@ -235,7 +235,7 @@ module.exports = [
     answer: true,
   },
   {
-    question: "he New York Marathon is the largest in the world.",
+    question: "The New York Marathon is the largest in the world.",
     answer: true,
   },
   {

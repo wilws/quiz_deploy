@@ -16,8 +16,7 @@ const ErrorPage = (props:{errorMsg:string}):JSX.Element => {
   return (
     <div className={style.errorPage}>
       <pre>{props.errorMsg}</pre>
-
-      <Link href="/" style={{ textDecoration: "none" }}>
+      <Link href="/">
         <button type="button" className={style.errorPageBtn}>
           Back to Home
         </button>
@@ -43,16 +42,14 @@ const ViewQuiz = () => {
 
 
     useEffect(() => {
-
-      if(!router.isReady) return;
+      if (!router.isReady) return;
       const colors = gradientColorGenerator(paramIdSanitiser(router.query.id));
-      setTimeout(()=>{
-        if (divRef.current ){
+      setTimeout(() => {
+        if (divRef.current) {
           divRef.current.style.background = `linear-gradient(${colors[0]} 10%,${colors[1]}) 90%`;
         }
-      },100);
-
-    }, [divRef, router.isReady]);
+      }, 100);
+    }, [divRef, router.isReady, router.query.id]);
 
 
     if (quiz.status === 'loading') {
@@ -67,10 +64,7 @@ const ViewQuiz = () => {
 
 
     if (quiz.status === "error") {
-      const errorMsg = quiz.error?.message
-        ? JSON.stringify(quiz.error.message)
-        : "Error in Fetching UserData";
-      return <ErrorPage errorMsg={errorMsg} />;
+      return <ErrorPage errorMsg={"Error in Fetching UserData"} />;
     }
 
 
@@ -144,9 +138,10 @@ export default ViewQuiz;
 
 
 const style = {
-  errorPage: `w-screen h-screen flex flex-col justify-center items-center `,
+  errorPage: `z-50 relative w-screen h-screen  flex flex-col justify-center items-center
+  md:text-3xl `,
 
-  errorPageBtn: `cursor-pointer mt-3 border-2 border-black text-black pl-2 pr-2`,
+  errorPageBtn: `cursor-pointer mt-3 cursor-pointer  border-2 border-black rounded-lg text-black pt-2 pb-2 pl-2 pr-2`,
 
   viewPage: `w-screen h-screen flex flex-col items-center justify-center`,
 
@@ -165,10 +160,10 @@ const style = {
 
   quizNo: `flex-none h-20 w-20 border-2 border-black flex flex-col justify-center items-center text-2xl
   md:h-36 md:w-36 md:text-5xl md:font-bold md:border-4  md:mr-4
-  lg:h-32 lg:w-32 lg:text-4xl lg:font-thin lg:border-2
+  lg:h-32 lg:w-32 lg:text-4xl  lg:border-2
  `,
 
-  createInfo: `flex-1 flex flex-col justify-center text-center border-l-2 border-r-2 border-black-100 rounded-sm tracking-wider uppercase font-thin
+  createInfo: `flex-1 flex flex-col justify-center text-center border-l-2 border-r-2 border-black-100 rounded-sm tracking-wider uppercase 
   md:text-4xl
   lg:border-0 lg:items-baseline lg:justify-end `,
 

@@ -77,7 +77,7 @@ export default ResultDisplay;
 
 const style = {
   resultPage: `
-  z-50 relative w-full h-full overflow-hiddens flex flex-col justify-center  items-center text-lg tracking-wider font-light gap-7
+  z-50 relative w-full h-full overflow-hiddens flex flex-col justify-center  items-center text-lg tracking-wider gap-7
   md:gap-20
   lg:gap-0 lg:pt-40`,
 
@@ -92,7 +92,7 @@ const style = {
   answer: `w-full flex flex-row  items-center mb-10
   lg:mb-20`,
 
-  description: `md:text-4xl md:font-thin
+  description: `md:text-4xl 
   lg:text-3xl `,
 
   icon: `mr-8

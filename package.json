@@ -9,7 +9,8 @@
     "lint": "next lint",
     "seed": "node ./prisma/seed/run-seed.js",
     "test": "jest --watch",
-    "clear-data": "node ./prisma/seed/clear-data.js"
+    "clear-data": "node ./prisma/seed/clear-data.js",
+    "build-css": "tailwindcss build -i ./src/input.css -o ./public/output.css"
   },
   "dependencies": {
     "@next/font": "13.1.2",
@@ -33,9 +34,9 @@
   },
   "devDependencies": {
     "@types/jest": "^29.5.0",
-    "autoprefixer": "^10.4.13",
+    "autoprefixer": "^10.4.14",
     "node-mocks-http": "^1.12.2",
-    "postcss": "^8.4.21",
-    "tailwindcss": "^3.2.4"
+    "postcss": "^8.4.23",
+    "tailwindcss": "^3.3.1"
   }
 }

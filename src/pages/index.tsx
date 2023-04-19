@@ -5,14 +5,7 @@ import Card from "../components/UI/Card";
 import Header from "../components/layout/Header";
 import { useEffect, useRef } from "react";
 import { Dimmer, Loader, Segment } from "semantic-ui-react";
-import Background from "@/components/layout/Background";
 
-
-  const ErrorPage = (props:{errorMsg:string}) => {
-    return (
-        <pre>{props.errorMsg}</pre>     
-    )
-  }
 
 export default function Home() {
 
@@ -87,7 +80,7 @@ export default function Home() {
             {status === "loading" ? (
               <LoadingComponent />
             ) : status === "error" ? (
-             <ErrorComponent errorMsg={error?.message ? error.message :"Error in Fetching UserData" }/>
+             <ErrorComponent errorMsg={"Error in Fetching UserData" }/>
             ) : (
               <>
                 <ul className={style.ul}>
