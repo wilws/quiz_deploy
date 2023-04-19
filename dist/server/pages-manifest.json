@@ -1,0 +1,11 @@
+{
+  "/_app": "pages/_app.js",
+  "/_document": "pages/_document.js",
+  "/api/quiz/[quizId]": "pages/api/quiz/[quizId].js",
+  "/api/quiz": "pages/api/quiz.js",
+  "/create": "pages/create.html",
+  "/": "pages/index.html",
+  "/view/[id]": "pages/view/[id].html",
+  "/_error": "pages/_error.js",
+  "/404": "pages/404.html"
+}
