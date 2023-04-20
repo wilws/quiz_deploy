@@ -2,7 +2,7 @@ type Question = {
     id: number;
     question: string;
     answer: string;
-    createId: number;
+    creatorId: number;
     createdAt: date;
 }
 

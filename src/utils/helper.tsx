@@ -1,3 +1,5 @@
+import { json } from "stream/consumers";
+
 export const isPositiveInteger = (stringNum: any) => {
   const number = Number(stringNum);
   const isInteger = Number.isInteger(number);
@@ -30,9 +32,27 @@ export const gradientColorGenerator = (id:number):Array<string> => {
     ["#E6DADA", "#274046"],
   ];
 
- 
-
   return colormMatch[id%10];
-
-
 }
+
+export const parsingUserData = (userData: User): User => {
+
+  const { id, name, createdAt, question } = userData;
+
+  const _question = question.map((q)=>{
+    return {
+      id: JSON.parse(JSON.stringify(q.id)),
+      question: JSON.parse(JSON.stringify(q.question)),
+      answer: JSON.parse(JSON.stringify(q.answer)),
+      creatorId: JSON.parse(JSON.stringify(q.creatorId)),
+      createdAt: JSON.parse(JSON.stringify(q.createdAt)),
+    };
+  });
+
+  return {
+    id: JSON.parse(JSON.stringify(id)),
+    name: JSON.parse(JSON.stringify(name)),
+    createdAt: JSON.parse(JSON.stringify(createdAt)),
+    question: _question,
+  };
+};

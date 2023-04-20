@@ -124,11 +124,11 @@ export default function Home(props:any) {
 // --- SSG --- /
 import { fetchAllQuizzes } from "../controllers/quiz";
 export async function getStaticProps() {
-   const quizzes = await fetchAllQuizzes(null); 
-  return {
-    props: { data: JSON.parse(JSON.stringify(quizzes.data)) },
-    revalidate: 10,
-  };
+    const quizzes = await fetchAllQuizzes(null); 
+    return {
+      props: { data: JSON.parse(JSON.stringify(quizzes.data)) },
+      revalidate: 10,
+    };
 }
 
 

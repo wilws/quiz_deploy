@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { getQuiz } from "@/request/quiz";
-import { paramIdSanitiser } from "../../utils/helper";
+import { paramIdSanitiser, parsingUserData } from "../../utils/helper";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import  QuestionDisplay  from "@/components/view/QuestionDisplay";
@@ -9,157 +9,169 @@ import { Dimmer, Loader } from "semantic-ui-react";
 import { gradientColorGenerator } from "@/utils/helper";
 import { useEffect ,useRef } from "react";
 import ErrorPage from "@/components/view/ErrorPage";
+import { GetStaticProps } from "next";
+import { fetchAllQuizzes,fetchQuiz } from "@/controllers/quiz";
 
-
-
-const ViewQuiz = () => {
-
-    const router = useRouter();
-    const [ answerList, setAnswerList ] = useState<Array<boolean>>([]);
-    const [currentPage, setCurrentPage] = useState<number>(1);
-    const divRef = useRef<HTMLDivElement>(null);
-
-    const quiz = useQuery({
-      queryKey: ["quiz", paramIdSanitiser(router.query.id)],
-      queryFn: () => getQuiz(paramIdSanitiser(router.query.id)),
-      enabled: router.isReady,
-    });
-
-
-    useEffect(() => {
-      if (!router.isReady) return;
-      const colors = gradientColorGenerator(paramIdSanitiser(router.query.id));
-      setTimeout(() => {
-        if (divRef.current) {
-          divRef.current.style.background = `linear-gradient(${colors[0]} 10%,${colors[1]}) 90%`;
-        }
-      }, 100);
-    }, [divRef, router.isReady, router.query.id]);
-
-
-    if (quiz.status === 'loading') {
-      return (
-        <div>
-          <Dimmer active inverted>
-            <Loader inverted>Loading</Loader>
-          </Dimmer>
-        </div>
-      );
-    }
-
-    if (quiz.status === "error") {
-      return <ErrorPage errorMsg={"Error in Fetching UserData"} />;
-    }
-
-    const { data } = quiz;
-    if (!data) return <ErrorPage errorMsg={"No user is found"} />;
-   
-    let questionKey = 1;
-    const markingList:Array<string> = [];
-  
-    return (
-      <div className={style.viewPage} ref={divRef}>
-        <div className={style.wrapper}>
-          <header className={style.header}>
-            <div className={style.quizNo}>
-              <span>Q{router.query.quizNo}</span>
-            </div>
-
-            <div className={style.createInfo}>
-              <span className={style.creatorIntro}>
-                This Quiz is created by :{" "}
-              </span>
-
-              <div className={style.creator}>{data?.name}</div>
-              <div className={style.createAt}>
-                {data?.createdAt.split("T")[0]}
-              </div>
-            </div>
-
-            <div className={style.pageNo}>
-              <span> {currentPage < 4 ? `${currentPage}/3` : "Result"} </span>
-            </div>
-          </header>
-
-          <main className={style.main}>
-            <div className={style.pageNoLong}>
-              <span>
-                {" "}
-                {currentPage < 4 ? `Question ${currentPage}` : "Result"}{" "}
-              </span>
-            </div>
-
-            {data?.question.map((q) => {
-              markingList.push(q.answer);
-              return (
-                <QuestionDisplay
-                  key={questionKey++}
-                  pageNo={questionKey}
-                  question={q.question}
-                  currentPage={currentPage}
-                  setCurrentPage={setCurrentPage}
-                  setAnswerList={setAnswerList}
-                />
-              );
-            })}
-
-            <ResultDisplay
-              pageNo={questionKey}
-              currentPage={currentPage}
-              answerList={answerList}
-              markingList={markingList}
-            />
-          </main>
-        </div>
-      </div>
-    );
+type PropsType = {
+  data:User;
 }
+
+const ViewQuiz = (props: PropsType) => {
+
+  const router = useRouter();
+  const [answerList, setAnswerList] = useState<Array<boolean>>([]);
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const divRef = useRef<HTMLDivElement>(null);
+
+  const quiz = useQuery({
+    queryKey: ["quiz", paramIdSanitiser(router.query.id)],
+    queryFn: () => getQuiz(paramIdSanitiser(router.query.id)),
+    initialData: props.data,
+    enabled: router.isReady,
+  });
+
+  useEffect(() => {
+    if (!router.isReady) return;
+    const colors = gradientColorGenerator(paramIdSanitiser(router.query.id));
+    setTimeout(() => {
+      if (divRef.current) {
+        divRef.current.style.background = `linear-gradient(${colors[0]} 10%,${colors[1]}) 90%`;
+      }
+    }, 100);
+  }, [divRef, router.isReady, router.query.id]);
+
+  // if (quiz.status === "loading") {
+  //   return (
+  //     <div>
+  //       <Dimmer active inverted>
+  //         <Loader inverted>Loading</Loader>
+  //       </Dimmer>
+  //     </div>
+  //   );
+  // }
+
+  if (quiz.status === "error") {
+    return <ErrorPage errorMsg={"Error in Fetching UserData"} />;
+  }
+
+  const { data } = quiz;
+  if (!data) return <ErrorPage errorMsg={"No user is found"} />;
+
+  let questionKey = 1;
+  const markingList: Array<string> = [];
+
+
+  return (
+    <div className={style.viewPage} ref={divRef}>
+      <div className={style.wrapper}>
+        <header className={style.header}>
+          <div className={style.quizNo}>
+            <span>Q{router.query.quizNo}</span>
+          </div>
+
+          <div className={style.createInfo}>
+            <span className={style.creatorIntro}>
+              This Quiz is created by :{" "}
+            </span>
+
+            <div className={style.creator}>{data?.name}</div>
+            <div className={style.createAt}>
+              {data?.createdAt.split("T")[0]}
+            </div>
+          </div>
+
+          <div className={style.pageNo}>
+            <span> {currentPage < 4 ? `${currentPage}/3` : "Result"} </span>
+          </div>
+        </header>
+
+        <main className={style.main}>
+          <div className={style.pageNoLong}>
+            <span>
+              {currentPage < 4 ? `Question ${currentPage}` : "Result"}
+            </span>
+          </div>
+
+          {data?.question.map((q) => {
+            markingList.push(q.answer);
+            return (
+              <QuestionDisplay
+                key={questionKey++}
+                pageNo={questionKey}
+                question={q.question}
+                currentPage={currentPage}
+                setCurrentPage={setCurrentPage}
+                setAnswerList={setAnswerList}
+              />
+            );
+          })}
+
+          <ResultDisplay
+            pageNo={questionKey}
+            currentPage={currentPage}
+            answerList={answerList}
+            markingList={markingList}
+          />
+        </main>
+      </div>
+    </div>
+  );
+};
 
 export default ViewQuiz;
 
 
-// export async function getStaticPaths() {
-//   // let paths = [];
 
-//   // for (let i = 0; i < 12; i++) {
-//   //   paths.push({
-//   //     params: {
-//   //       portfolioId: i.toString(),
-//   //     },
-//   //   });
-//   // }
+export const getStaticProps:GetStaticProps  = async ({ params }: any) => {
 
-//   return {
-//     paths: [
-//       {params: {id: ""}},
-//   ],
-//     fallback: false,
-//   };
-// }
-// import { prisma } from "../../db/connection";
+  let quizId: string | null;
+  if (!params?.id) return {props:{data:null}}
 
-// import handler  from "src/pages/api/quiz/[quizId]";
-// export async function getStaticProps({params}:any) {
-//  console.log('here')
-//   // const quizzes = await getQuiz(287);
+  quizId = params.id;
+  const _data  = await fetchQuiz(Number(quizId));
+  const data = parsingUserData(_data.data);
 
-//  const user = await prisma.user.findMany();
-//  console.log(user)
-
-  
-
-
-//   const id = params
-//    console.log(id);
-//   return {
-//     props: { id },
-//     revalidate: 10,
-//   };
-// }
+  return {
+    props: {
+      data: {
+        id: quizId,
+        name: data.name,
+        createdAt: data.createdAt,
+        question: data.question,
+      },
+    },
+  };
+}
 
 
 
 
+export const getStaticPaths = async () => {
+
+  const quizzes = await fetchAllQuizzes(null);
+  const quizzesArray = JSON.parse(JSON.stringify(quizzes.data.users));
+
+  type pathType = {
+    params: {
+      id: string;
+    };
+  };
+
+  const paths: Array<pathType> = [];
+
+  quizzesArray.forEach((quiz: User) => {
+    paths.push({
+      params: {
+        id: quiz.id.toString(),
+      },
+    });
+  });
+
+  return {
+    paths,
+    fallback: false,
+  };
+};
 
 
 

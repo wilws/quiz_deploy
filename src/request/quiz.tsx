@@ -18,7 +18,6 @@ export async function getQuizzes(PageParam: string | null = null): Promise<Quiz>
 export async function getQuiz(quizId: number | string): Promise<User> {
   const endPoint = `/api/quiz/${quizId}`
   const { data } = await axios.get(endPoint);
-  console.log(data)
   return data;
 }
 
