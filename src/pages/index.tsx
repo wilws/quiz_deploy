@@ -7,7 +7,7 @@ import { useEffect, useRef } from "react";
 import { Dimmer, Loader, Segment } from "semantic-ui-react";
 
 
-export default function Home() {
+export default function Home(props:any) {
 
   const container = useRef<HTMLHeadingElement>(null);
 
@@ -19,7 +19,7 @@ export default function Home() {
     status,
   } = useInfiniteQuery({
     queryKey: ["quizzes"],
-
+    initialData: props.quizzes,
     queryFn: ({ pageParam }) => getQuizzes(pageParam),
     getNextPageParam: (lastPage, pages) => lastPage.cursor,
   });
@@ -96,8 +96,11 @@ export default function Home() {
                           userId={user.id}
                         />
                       );
-                    })}
+                    }
+                    )
+                  }
                 </ul>
+
                 {isFetchingNextPage && (
                   <Segment>
                     <div className={style.loader}>
@@ -108,6 +111,7 @@ export default function Home() {
                   </Segment>
                 )}
               </>
+
             )}
           </main>
         </div>
@@ -116,6 +120,19 @@ export default function Home() {
   );
 }
 
+
+// --- SSG --- /
+import { fetchAllQuizzes } from "../controllers/quiz";
+export async function getStaticProps() {
+   const quizzes = await fetchAllQuizzes(null); 
+  return {
+    props: { data: JSON.parse(JSON.stringify(quizzes.data)) },
+    revalidate: 10,
+  };
+}
+
+
+// --- Tailwind Styling --- //
 const style = {
   container: `z-50 w-screen h-screen p-4 relative flex flex-row justify-center items-center
   xl:flex xl:flex-row xl:h-[calc(100vh+2rem)] `,

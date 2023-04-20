@@ -10,6 +10,8 @@ import AfterCreationPopUp from "@/components/create/AfterCreationPopUp";
 const CreateQuiz = () => {
 
   const [statusCode, setStatusCode] = useState<number|null>(null);
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  
 
   const queryClient = useQueryClient();
       const createPostMutation = useMutation({
@@ -17,6 +19,9 @@ const CreateQuiz = () => {
         onSuccess: (data) => {
           setStatusCode(data);
           queryClient.invalidateQueries(["quizzes"], { exact: true });
+        },
+        onError: () => {
+          setStatusCode(500);
         },
       });
 
@@ -39,9 +44,6 @@ const CreateQuiz = () => {
     const [question3, setQuestion3] = useState<string>("");
     const [answer3, setAnswer3] = useState<boolean>(true);
 
-    const [currentPage, setCurrentPage] = useState<number>(1);
-  
-
 
     function constructQuestionAnswerArray(): Array<QuestionAnswer> {
       return [
@@ -63,6 +65,7 @@ const CreateQuiz = () => {
 
     function submitHandler(e: React.FormEvent<HTMLInputElement>) {
       e.preventDefault();
+    
       createPostMutation.mutate({
         creatorName,
         questions: constructQuestionAnswerArray(),

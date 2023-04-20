@@ -8,7 +8,7 @@ type propsType = {
 
 const AfterCreationPopUp = (props:propsType):JSX.Element => {
 
-    const [counter, setCounter] = useState<number>(5);
+    const [counter, setCounter] = useState<number>(3);
     const { push } = useRouter();
 
     const { statusCode } = props;

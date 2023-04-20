@@ -1,101 +1,38 @@
+// ***  This handler provide RESTful API fro external use.
+// ***  To direct internal extraction, use function in "src/controller"
+
 import type { NextApiRequest, NextApiResponse } from "next";
-import { getFirstUserId, getLastUserId } from "@/utils/db-func";
-import { prisma } from "../../../db/connection";
+import { fetchAllQuizzes, createQuiz } from "@/controllers/quiz";
 
 
-export default async function quizApiHandler (req: NextApiRequest, res: NextApiResponse) {
-  
+export default async function handler(
+  req: NextApiRequest,
+  res: NextApiResponse
+) {
+  switch (req.method) {
+    // GET/ api/quiz
+    case "GET":
+      const { cursor } = req.query;
+      const getResult = await fetchAllQuizzes(cursor);
+      res.status(getResult.statusCode).json(getResult.data);
+      break;
 
-  // GET /api/quiz
-  if (req.method == "GET") {
-    const { cursor } = req.query;
+    // POST/ api/quiz
+    case "POST":
+      const { creatorName, questions } = req.body;
 
-    let lastUserId: number | boolean = await getLastUserId();
-    if (typeof lastUserId !== "number") {
-      res.status(500).json({ message: "Failed to fetch User data" });
-      return;
-    }
+      const postResult = await createQuiz(creatorName, questions);
 
-    let _cursor: number = lastUserId;
-    let _take: number = 13; // amend this no to change the no of fetch
-    let _skip: number = 0;
-
-    const cursorIdFromClient = Number(cursor);
-    if (cursorIdFromClient && cursorIdFromClient < lastUserId) {
-      _cursor = cursorIdFromClient;
-      _skip = 1;
-    }
-
-    try {
-      const users = await prisma.user.findMany({
-        take: _take,
-        skip: _skip,
-        cursor: {
-          id: _cursor,
-        },
-        include: {
-          question: true,
-        },
-        orderBy: {
-          id: "desc",
-        },
-      });
-
-      const result: Quiz = {
-        users,
-        count: users.length,
-      };
-
-      if (users.length > 0) {
-        const lastItemId = users[users.length - 1].id;
-
-        if (lastItemId !== (await getFirstUserId())) {
-          result.cursor = lastItemId.toString();
-        }
+      if (postResult && postResult?.statusCode === 204) {
+        res.status(204).end();
+      } else {
+        res.status(500).json({ message: "Failed to create quiz" });
       }
+      break;
 
-    res.status(200).json(result);
-
-
-    } catch (err) {
-      res.status(500).json({ message: "Failed to fetch User data" });
-
-    }
-  } // End of //GET /api/quiz
-
-
-
-  // POST /api/quiz
-  if (req.method == "POST") {
-
-    const { creatorName, questions } = req.body;
-
-    try {
-      const users = await prisma.user.create({
-        data: {
-          name: creatorName,
-        },
-      });
-
-      for (let i = 0; i < questions.length; i++) {
-        const question = questions[i].question;
-        const answer = questions[i].answer;
-        
-
-        await prisma.question.create({
-          data: {
-            question,
-            answer,
-            creatorId: users.id,
-          },
-        });        
-      }
-
-      res.status(204).end();
-
-    } catch (err) {
-      res.status(500).json({ message: "Failed to create quiz" });
-
-    }
-  } // End of //POST /api/quiz
+    // Others - Not Allowed
+    default:
+      res.status(405).json("Method not allow");
+      break;
+  }
 }

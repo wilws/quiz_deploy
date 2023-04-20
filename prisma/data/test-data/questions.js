@@ -1,4 +1,5 @@
 module.exports = [
+// export const Questions =  [
   {
     question: "Sharks are mammals?",
     answer: false,

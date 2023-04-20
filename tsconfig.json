@@ -25,6 +25,6 @@
       "@/*": ["./src/*", "./prisma/*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "prisma/data/test-data/users.js", "prisma/data/test-data/questions.js", "prisma/data/test-data/index.js", "prisma/run-seed.js", "prisma/data/test-data/questions..js", "prisma/data/test-data/index.js", "prisma/db.js"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "prisma/data/test-data/users.ts", "prisma/data/test-data/questions.ts", "prisma/data/test-data/index.ts", "prisma/run-seed.js", "prisma/data/test-data/questions..js", "prisma/data/test-data/index.ts", "prisma/db.js", "src/db/connection.js", "prisma/seed/clear-data.js", "prisma/seed/run-seed.js"],
   "exclude": ["node_modules"]
 }

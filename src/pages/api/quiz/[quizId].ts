@@ -1,7 +1,10 @@
-import type { NextApiRequest, NextApiResponse } from "next";
-import { paramIdSanitiser } from "../../../utils/helper";
-import { prisma } from "../../../db/connection";
+// ***  This handler provide RESTful API fro external use.
+// ***  To direct internal extraction, use function in "src/controller"
 
+
+import type { NextApiRequest, NextApiResponse } from "next";
+import { paramIdSanitiser } from "@/utils/helper";
+import { fetchQuiz } from "@/controllers/quiz";
 
 export default async function handler(
   req: NextApiRequest,
@@ -9,50 +12,25 @@ export default async function handler(
 ) {
 
   const { quizId } = req.query;
+  const sanitisedId = paramIdSanitiser(quizId);
 
-  if (paramIdSanitiser(quizId) == -1) {
+  if (sanitisedId == -1) {
     res.status(400).json({ message: "Bad request" });
   }
 
-  // GET /api/quiz/:quizId
-  if (req.method == "GET") {
-    try {
-      const user = await prisma.user.findUnique({
-        where: {
-          id: paramIdSanitiser(quizId),
-        },
-        include: {
-          question: true,
-        },
-      });
 
-      res.status(200).json({ user });
+  switch (req.method) {
 
-      
+    // GET /api/view/:quizId
+    case "GET":
+      const getResult = await fetchQuiz(sanitisedId);
+      res.status(getResult.statusCode).json(getResult?.data);
+      break;
 
-    } catch (err) {
-      res.status(500).json({ message: "Failed to fetch User data" });
-   
-    }
+
+    // Others - Not Allowed
+    default:
+      res.status(405).json("Method not allow");
+      break;
   }
-
-
-
-  // ---- Reserved for Extesnion ---- //
-
-  // DELETE /api/quiz/:quizId
-  if (req.method == "DELETE") {
-    res.status(404).json({ message: "Not found" });
-  }
-
-  // PUT /api/quiz/:quizId
-  if (req.method == "PUT") {
-    res.status(404).json({ message: "Not found" });
-  }
-
-  // PATCH /api/quiz/:quizId
-  if (req.method == "PATCH") {
-    res.status(404).json({ message: "Not found" });
-  }
-  // ---------------------------------- //
 }

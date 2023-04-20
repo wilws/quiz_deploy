@@ -6,24 +6,9 @@ import { useState } from "react";
 import  QuestionDisplay  from "@/components/view/QuestionDisplay";
 import ResultDisplay from "@/components/view/ResultDisplay";
 import { Dimmer, Loader } from "semantic-ui-react";
-import Link from "next/link";
 import { gradientColorGenerator } from "@/utils/helper";
 import { useEffect ,useRef } from "react";
-
-
-const ErrorPage = (props:{errorMsg:string}):JSX.Element => {
-
-  return (
-    <div className={style.errorPage}>
-      <pre>{props.errorMsg}</pre>
-      <Link href="/">
-        <button type="button" className={style.errorPageBtn}>
-          Back to Home
-        </button>
-      </Link>
-    </div>
-  );
-}
+import ErrorPage from "@/components/view/ErrorPage";
 
 
 
@@ -62,17 +47,13 @@ const ViewQuiz = () => {
       );
     }
 
-
     if (quiz.status === "error") {
       return <ErrorPage errorMsg={"Error in Fetching UserData"} />;
     }
 
-
     const { data } = quiz;
     if (!data) return <ErrorPage errorMsg={"No user is found"} />;
-
    
-
     let questionKey = 1;
     const markingList:Array<string> = [];
   
@@ -137,11 +118,54 @@ const ViewQuiz = () => {
 export default ViewQuiz;
 
 
-const style = {
-  errorPage: `z-50 relative w-screen h-screen  flex flex-col justify-center items-center
-  md:text-3xl `,
+// export async function getStaticPaths() {
+//   // let paths = [];
 
-  errorPageBtn: `cursor-pointer mt-3 cursor-pointer  border-2 border-black rounded-lg text-black pt-2 pb-2 pl-2 pr-2`,
+//   // for (let i = 0; i < 12; i++) {
+//   //   paths.push({
+//   //     params: {
+//   //       portfolioId: i.toString(),
+//   //     },
+//   //   });
+//   // }
+
+//   return {
+//     paths: [
+//       {params: {id: ""}},
+//   ],
+//     fallback: false,
+//   };
+// }
+// import { prisma } from "../../db/connection";
+
+// import handler  from "src/pages/api/quiz/[quizId]";
+// export async function getStaticProps({params}:any) {
+//  console.log('here')
+//   // const quizzes = await getQuiz(287);
+
+//  const user = await prisma.user.findMany();
+//  console.log(user)
+
+  
+
+
+//   const id = params
+//    console.log(id);
+//   return {
+//     props: { id },
+//     revalidate: 10,
+//   };
+// }
+
+
+
+
+
+
+
+
+
+const style = {
 
   viewPage: `w-screen h-screen flex flex-col items-center justify-center`,
 
