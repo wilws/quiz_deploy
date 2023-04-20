@@ -13,6 +13,7 @@
     "clear-data": "node ./prisma/seed/clear-data.js",
     "deploy": "npm run migrate:deploy && npm run clear-data && npm run seed && npm run build && npm run start",
     "db-connect": "node ./prisma/seed/test-connection.js"
+   
   },
   "prisma": {
     "seed": "node prisma/seed/run-seed.js"
