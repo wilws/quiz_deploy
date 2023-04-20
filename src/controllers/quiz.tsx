@@ -1,3 +1,10 @@
+// These are the functions that communicate with database.
+// There are 3 path to access to these functions:
+//
+// 1) (External-REST) Calling REST api (eg: GET// api/quiz) (from other device (i.e. CROS))
+// 2) (Internal-REST) Using the functions in "src/request" (for app's internal use only)
+// 3) (Internal-Direct) Export functions in this page directly (for setting SSG/SSR )
+
 
 import { getFirstUserId, getLastUserId } from "@/utils/db-func";
 import { prisma } from "../db/connection";
@@ -29,7 +36,7 @@ export async function fetchAllQuizzes(cursor: any):Promise<resultType> {
   }
 
   try {
-    const users = await prisma.user.findMany({
+    const users = await prisma.creator.findMany({
       take: _take,
       skip: _skip,
       cursor: {
@@ -61,6 +68,7 @@ export async function fetchAllQuizzes(cursor: any):Promise<resultType> {
       data: result,
     };
   } catch (err) {
+
     return {
       statusCode: 500,
       data: { message: "Failed to fetch User data" },
@@ -73,13 +81,13 @@ export async function fetchAllQuizzes(cursor: any):Promise<resultType> {
 export async function fetchQuiz(quizId:number):Promise<resultType> {
   
     try {
-        const user = await prisma.user.findUnique({
-            where: {
+        const user = await prisma.creator.findUnique({
+          where: {
             id: paramIdSanitiser(quizId),
-            },
-            include: {
+          },
+          include: {
             question: true,
-            },
+          },
         });
 
         return {
@@ -101,10 +109,10 @@ export async function createQuiz(creatorName:any, questions:any):Promise<resultT
   
       
     try {
-        const users = await prisma.user.create({
-        data: {
+        const users = await prisma.creator.create({
+          data: {
             name: creatorName,
-        },
+          },
         });
 
         for (let i = 0; i < questions.length; i++) {

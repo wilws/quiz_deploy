@@ -4,46 +4,59 @@ import { getQuizzes } from "../request/quiz";
 import Card from "../components/UI/Card";
 import Header from "../components/layout/Header";
 import { useEffect, useRef } from "react";
+import  {getTotalUserNo} from "../utils/db-func";
 import { Dimmer, Loader, Segment } from "semantic-ui-react";
 
 
-export default function Home(props:any) {
+type PropsType = {
+  totalNoOfQuiz:number
+}
+
+export default function Home(props: PropsType) {
+
+
+
+  const totalNoOfQuiz = (props?.totalNoOfQuiz) ? props?.totalNoOfQuiz : 0;
 
   const container = useRef<HTMLHeadingElement>(null);
 
-  const {
-    data,
-    error,
-    fetchNextPage,
-    isFetchingNextPage,
-    status,
-  } = useInfiniteQuery({
-    queryKey: ["quizzes"],
-    initialData: props.quizzes,
-    queryFn: ({ pageParam }) => getQuizzes(pageParam),
-    getNextPageParam: (lastPage, pages) => lastPage.cursor,
-  });
+  const { data, error, fetchNextPage, isFetchingNextPage, status } =
+    useInfiniteQuery({
+      queryKey: ["quizzes"],
+      queryFn: ({ pageParam }) => getQuizzes(pageParam),
+      getNextPageParam: (lastPage, pages) => lastPage.cursor,
+    });
 
 
-   useEffect(() => {
 
-     const handleScroll = () => {
-       if (!container.current) return;
 
-       const travelDistance = window.innerHeight + window.pageYOffset;
-       const triggerPoint =
-         container.current.offsetTop + container.current.offsetHeight / 1.5;
+  let currentFetchNo = 0;
+  useEffect(() => {
+    const handleScroll = async () => {
+      if (!container.current) return;
 
-       if (travelDistance >= triggerPoint) {
-        fetchNextPage();
-       }
-     };
+      const travelDistance = window.innerHeight + window.pageYOffset;
+      const triggerPoint =
+        container.current.offsetTop + container.current.offsetHeight / 1;
 
-     window.addEventListener("scroll", handleScroll);
-     return () => {
-       window.removeEventListener("scroll", handleScroll);
-     };
-   }, []);
+      if (travelDistance >= triggerPoint) {
+        if (currentFetchNo >= totalNoOfQuiz) return;
+
+        const { data } = await fetchNextPage();
+        if (data && data.hasOwnProperty("pages")) {
+          data.pages
+            .flatMap((data) => data.count)
+            .forEach((count) => (currentFetchNo += count));
+        }
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, [totalNoOfQuiz]);
+
 
 
   let quizCounter = 1;
@@ -51,16 +64,16 @@ export default function Home(props:any) {
   const LoadingComponent = () => {
     return (
       <div className="loadingPage">
-        <Dimmer active inverted >
+        <Dimmer active inverted>
           <Loader inverted active>
             Loading
           </Loader>
         </Dimmer>
       </div>
     );
-  }
+  };
 
-  const ErrorComponent = (props:{errorMsg:string}) => {
+  const ErrorComponent = (props: { errorMsg: string }) => {
     return (
       <div className={style.errorPage}>
         <h3>Ops!..Error !</h3>
@@ -69,6 +82,7 @@ export default function Home(props:any) {
     );
   };
 
+  // console.log(data,"<< data")
 
   return (
     <>
@@ -80,7 +94,7 @@ export default function Home(props:any) {
             {status === "loading" ? (
               <LoadingComponent />
             ) : status === "error" ? (
-             <ErrorComponent errorMsg={"Error in Fetching UserData" }/>
+              <ErrorComponent errorMsg={"Error in Fetching UserData"} />
             ) : (
               <>
                 <ul className={style.ul}>
@@ -96,9 +110,7 @@ export default function Home(props:any) {
                           userId={user.id}
                         />
                       );
-                    }
-                    )
-                  }
+                    })}
                 </ul>
 
                 {isFetchingNextPage && (
@@ -111,7 +123,6 @@ export default function Home(props:any) {
                   </Segment>
                 )}
               </>
-
             )}
           </main>
         </div>
@@ -121,15 +132,21 @@ export default function Home(props:any) {
 }
 
 
-// --- SSG --- /
+// --- SSG ---//
+// Return the total no. of quiz in db
+// scrollbar stop sending request when all the quiz are fetched.
 import { fetchAllQuizzes } from "../controllers/quiz";
 export async function getStaticProps() {
-    const quizzes = await fetchAllQuizzes(null); 
+    const totalNo = await getTotalUserNo();
     return {
-      props: { data: JSON.parse(JSON.stringify(quizzes.data)) },
-      revalidate: 10,
+      props: { 
+        // data: JSON.parse(JSON.stringify(quizzes.data)),
+        totalNoOfQuiz:totalNo
+      },
+      revalidate: 20,  // regenerate in 20 sec
     };
 }
+
 
 
 // --- Tailwind Styling --- //

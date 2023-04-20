@@ -93,7 +93,7 @@ const style = {
   li: `w-full flex flex-row
   mb-20
   md:mb-30`,
-  
+
   questionNoWrapper: `w-20 flex flex-row justify-left
   md:w-40`,
 
@@ -106,8 +106,16 @@ const style = {
   answerWrapper: `font-black text-black text-right w-full`,
 
   buttonGroup: `w-full flex flex-row justify-between`,
-  backButton: `border-2 border-black cursor-pointer tracking-widest  w-40 bg-black text-white h-10 rounded-xl
-   md:w-64 md:h-16 md:text-3xl md:font-thin`,
-  confirmButton: `border-2 border-red cursor-pointer tracking-widest  w-40 bg-red-700 text-white h-10 rounded-xl
-   md:w-64 md:h-16 md:text-3xl md:font-thin`,
+  // backButton: `border-2 border-black cursor-pointer tracking-widest  w-40 bg-black text-white h-10 rounded-xl
+  //  md:w-64 md:h-16 md:text-3xl md:font-thin`,
+  // confirmButton: `border-2 border-red cursor-pointer tracking-widest  w-40 bg-red-700 text-white h-10 rounded-xl
+  //  md:w-64 md:h-16 md:text-3xl md:font-thin`,
+
+  backButton: `border-2 border-red cursor-pointer tracking-widest  bg-black text-white 
+  w-28 h-9 rounded-xl
+  md:w-40 md:h-12 md:text-2xl md:font-thin`,
+
+  confirmButton: `border-2 border-red cursor-pointer tracking-widest bg-red-700 text-white
+  w-28 h-9 rounded-xl
+  md:w-40 md:h-12 md:text-2xl md:font-thin`,
 };

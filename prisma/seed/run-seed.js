@@ -1,16 +1,8 @@
 const testData = require("../data/test-data/index.js");
-// const Prisma = require('@prisma/client');
-
-
-// import { prisma } from "../../src/db/connection";
-// import { testData } from "../data/test-data/index";
-
-
-// const prisma = new Prisma.PrismaClient();
 const prisma = require("../connection.js");
 
 async function createUser(userName) {
-  const users = await prisma.user.create({
+  const users = await prisma.creator.create({
     data: {
       name: userName,
     },
@@ -27,8 +19,8 @@ async function createQuestion(questionObj) {
 }
 
 
-
 let counter = 0;
+let questionCounter = 0;
 let totalQuestion = testData.usersData.length;
 const questionsData = [ ... testData.questionsData ]
 
@@ -41,6 +33,7 @@ testData.usersData.forEach((userObj) =>{
 
     // insert 3 questions after the user is created
     for (let i = 0; i < 3; i++) {
+        questionCounter++
         const questionObj = questionsData.shift();
         createQuestion({
           question: questionObj?.question,
@@ -57,10 +50,7 @@ testData.usersData.forEach((userObj) =>{
     if (counter == totalQuestion-1) {
       console.log(
         "\x1b[32m%s\x1b[0m",
-        `Inserted ${counter} users records into table "user".\nAlso created 3 questions records for each user (total ${
-          counter * 3
-        } questions records were inserted into table "questions").`
-       
+        `Inserted ${++counter} users records into table "user".\nAlso created 3 questions records for each user (total ${++questionCounter} questions records were inserted into table "questions").`
       );
       return;
 
@@ -71,5 +61,5 @@ testData.usersData.forEach((userObj) =>{
   .catch(async (e) => {
     console.error(e);
     process.exit(1);
-  });
+  })
 });

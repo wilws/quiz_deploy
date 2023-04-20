@@ -1,12 +1,7 @@
-// const Prisma = require("@prisma/client");
-// const prisma = new Prisma.PrismaClient();
-
-// import { prisma } from "../../src/db/connection";
-
 const prisma = require("../connection");
 
 async function deleteAllUsers() {
-  await prisma.user.deleteMany({});
+  await prisma.creator.deleteMany({});
 }
 
 async function deleteAllQuestions() {
@@ -27,6 +22,8 @@ deleteAllQuestions()
   })
   .catch(async (e) => {
     console.error(e);
-    // await prisma.$disconnect();
-    // process.exit(1);
+  
+  }).finally(async() =>{
+     await prisma.$disconnect()
+     process.exit(1)
   });

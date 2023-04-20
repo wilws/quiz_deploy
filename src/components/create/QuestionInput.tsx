@@ -174,13 +174,25 @@ const style = {
 
   buttonGroup: `w-4/5 flex flex-row justify-between`,
 
-  button: `border-2 border-red cursor-pointer tracking-widest  w-40 bg-black text-white h-10 rounded-xl
-  md:w-64 md:h-16 md:text-3xl md:font-thin`,
+  // button: `border-2 border-red cursor-pointer tracking-widest  w-40 bg-black text-white h-10 rounded-xl
+  // md:w-64 md:h-16 md:text-3xl md:font-thin`,
 
-  buttonDisable: ` tracking-widest  w-40 bg-gray-300 text-white h-10 rounded-xl
-  md:w-64 md:h-16 md:text-3xl md:font-thin`,
+  // buttonDisable: ` tracking-widest  w-40 bg-gray-300 text-white h-10 rounded-xl
+  // md:w-64 md:h-16 md:text-3xl md:font-thin`,
 
-  exitButton: `mt-20 text-black`,
+  // exitButton: `mt-20 text-black`,
+
+  exitButton: `border-2 border-red cursor-pointer tracking-widest  bg-black text-white 
+  w-28 h-9 rounded-xl
+  md:w-40 md:h-12 md:text-2xl md:font-thin`,
+
+  button: `border-2 border-red cursor-pointer tracking-widest  bg-black text-white 
+  w-28 h-9 rounded-xl
+  md:w-40 md:h-12 md:text-2xl md:font-thin`,
+
+  buttonDisable: `border-2 border-red cursor-pointer tracking-widest bg-gray-300 text-white
+  w-28 h-9 rounded-xl
+  md:w-40 md:h-12 md:text-2xl md:font-thin`,
 };
 
 

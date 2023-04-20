@@ -71,14 +71,30 @@ const style = {
   md:text-4xl md:tracking-wider md:leading-loose`,
   input: `focus:outline-none bg-transparent border-b-2 border-red  w-3/4 h-12 text-center text-xl mb-20 max-w-lg
   md:text-4xl uppercase md:mt-20 md:mb-40`,
-  buttonGroup: `w-4/5 flex flex-row justify-between`,
+  // buttonGroup: `w-4/5 flex flex-row justify-between`,
 
-  exitButton: `border-2 border-red cursor-pointer tracking-widest  w-40 bg-black text-white h-10 rounded-xl
-  md:w-64 md:h-16 md:text-3xl md:font-thin`,
+  // exitButton: `border-2 border-red cursor-pointer tracking-widest  w-40 bg-black text-white h-10 rounded-xl
+  // md:w-64 md:h-16 md:text-3xl md:font-thin`,
 
-  button: `border-2 border-red cursor-pointer tracking-widest  w-40 bg-black text-white h-10 rounded-xl
-  md:w-64 md:h-16 md:text-3xl md:font-thin`,
+  // button: `border-2 border-red cursor-pointer tracking-widest  w-40 bg-black text-white h-10 rounded-xl
+  // md:w-64 md:h-16 md:text-3xl md:font-thin`,
 
-  buttonDisable: ` tracking-widest  w-40 bg-gray-300 text-white h-10 rounded-xl
-  md:w-64 md:h-16 md:text-3xl md:font-thin`,
+  // buttonDisable: ` tracking-widest  w-40 bg-gray-300 text-white h-10 rounded-xl
+  // md:w-64 md:h-16 md:text-3xl md:font-thin`,
+
+  buttonGroup: `flex-none w-full h-44 flex flex-row justify-between p-4
+  md:pl-14 md:pr-14
+  lg:h-96 lg:w-2/5`,
+
+  exitButton: `border-2 border-red cursor-pointer tracking-widest  bg-black text-white 
+  w-28 h-9 rounded-xl
+  md:w-40 md:h-12 md:text-2xl md:font-thin`,
+
+  button: `border-2 border-red cursor-pointer tracking-widest  bg-black text-white 
+  w-28 h-9 rounded-xl
+  md:w-40 md:h-12 md:text-2xl md:font-thin`,
+
+  buttonDisable: `border-2 border-red cursor-pointer tracking-widest bg-gray-300 text-white
+  w-28 h-9 rounded-xl
+  md:w-40 md:h-12 md:text-2xl md:font-thin`,
 };

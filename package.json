@@ -8,10 +8,14 @@
     "start": "next start",
     "lint": "next lint",
     "seed": "node ./prisma/seed/run-seed.js",
-    "migrate:deploy": "prisma migrate deploy",
+    "migrate:deploy": "npx prisma migrate deploy",
     "test": "jest --watch",
     "clear-data": "node ./prisma/seed/clear-data.js",
-    "deploy": "npm run migrate:deploy && npm run clear-data && npm run seed && npm run build && npm run start"
+    "deploy": "npm run migrate:deploy && npm run clear-data && npm run seed && npm run build && npm run start",
+    "db-connect": "node ./prisma/seed/test-connection.js"
+  },
+  "prisma": {
+    "seed": "node prisma/seed/run-seed.js"
   },
   "dependencies": {
     "@next/font": "13.1.2",

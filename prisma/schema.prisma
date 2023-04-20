@@ -3,11 +3,12 @@ generator client {
 }
 
 datasource db {
-  provider = "sqlite"
-  url      = "file:./dev.db"
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
 }
 
-model User {
+
+model Creator {
   id        Int        @id @default(autoincrement())
   name      String
   createdAt DateTime   @default(now())
@@ -20,5 +21,11 @@ model Question {
   answer    Boolean
   creatorId Int
   createdAt DateTime @default(now())
-  creator   User     @relation(fields: [creatorId], references: [id])
+  creator   Creator     @relation(fields: [creatorId], references: [id])
+}
+
+model ConnectionTesting {
+  id Int  @id @default(autoincrement())
+  connection Boolean
+  createdAt DateTime @default(now())
 }

@@ -1,6 +1,5 @@
-// Function here is to request resources *Internally* via RESTful API pattern.
-// Resources also can be fetched directly (communicate with db directly) 
-// by using functions in "src/controller"
+// Functions here send requests *Internally* via RESTful API pattern.
+// Resources can also be fetched directly (communicate with db directly) by using functions in "src/controllers"
 
 
 import axios from "axios";
