@@ -12,8 +12,8 @@
     "test": "jest --watch",
     "clear-data": "node ./prisma/seed/clear-data.js",
     "deploy": "npm run migrate:deploy && npm run clear-data && npm run seed && npm run build && npm run start",
-    "db-connect": "node ./prisma/seed/test-connection.js"
-   
+    "db-connect": "node ./prisma/seed/test-connection.js",
+    "vercel-build": "prisma generate && prisma migrate deploy && next build"
   },
   "prisma": {
     "seed": "node prisma/seed/run-seed.js"
