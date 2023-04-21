@@ -1,31 +1,93 @@
 
 
 
-## Clone the application <br>
+
+
+
+# Start the application :
+<br><br>
+
+## STEP 1 -- Clone the Application <br>
 
 ```
-git clone https://github.com/wilws/quiz_challenge.git .
+git clone https://github.com/wilws/quiz_challenge.git
 ```
+<br>
+<br>
+
+## STEP 2 -- Move to the  Folder <br>
+
+```
+cd quiz_challenge
+```
+<br>
+<br>
+
+## STEP 3 -- Install Packages <br>
+
+```
+npm install
+```
+<br>
+<br>
+
+## STEP 4 -- Set SQLite Database <br>
+
+```
+npx prisma migrate dev
+
+
+## You will be asked to name the migration:
+Enter a name for the new migration: …  (input any name you like)
+```
+<br><br>
+
+## STEP 5 -- Seed Data <br>
+
+```
+npm run seed
+```
+<br>
+<br>
+
+## STEP 7 -- Build the Application  <br>
+
+```
+npm run build & npm run start
+```
+<br>
 
 
 <br>
+<br>
 
-## Data Seeding <br>
-If you want to have some dummy data in database, you can run the following command in terminal :
+## STEP 7 -- View the Application  <br>
+
+Move to "localhost:3000" in browser
+<br><br>
+<br>
+
+# Some Features :
+<br>
+
+## (1) - Data Seeding
+<br>
+Dummy data is ready for use. You can run the following command in terminal :
 
 ```diff
 npm run seed  
 ```
 
-You will see the following output in terminal:
+Then you will see the following output in terminal:
 
 ```diff
-Inserted 12 users records into table "user".
-Also created 3 questions records for each user (total 36 questions records were inserted into table "questions").
+Inserted 24 users records into table "user".
+Also created 3 questions records for each user (total 72 questions records were inserted into table "questions").
 ```
 <br>
+<br>
 
-## Delete all data in database <br>
+## (2) - Delete All Data in Database <br>
 Run the following command in terminal to delete all the data in database
 
 ```diff
@@ -38,7 +100,37 @@ You will see the following output in terminal:
 All questions in database were deleted.
 All users in database were deleted.
 ```
+<br>
+<br>
 
+## (3) - Lazy Loader <br>
+In the index page, when scrolling all to the bottom, auto loading will be triggered and another 12 quizzes will be fetched. When all the data are fetched out, lazy loader will be suspended.
+
+<br><br>
+
+## (4) - Quiz <br>
+Though the task only requires to display the questions. But I amend it to be a small quiz. You can see the result after finishing the question, have fun!
+<br><br>
+<br>
+
+
+## (5) - Static Site Generation (SSG) <br>
+In view page, 13 pages are pre-rendered during the build time.
+
+
+
+<img src="https://drive.google.com/uc?export=view&id=1q4F2NEKVfHEzYFg5uWC14fqt7GYW7fKF" style="width: 650px; max-width: 100%; height: auto" title="" />
+
+
+
+<br><br><br><br>
+
+# Draft Design in Adobe XD Before Work
+
+<img src="https://drive.google.com/uc?export=view&id=1sHUpEBPfjYUg3w5WxSvsKII4UvPUQqKQ" style="width: 650px; max-width: 100%; height: auto" title="" />
+
+
+<br>
 
 
 
