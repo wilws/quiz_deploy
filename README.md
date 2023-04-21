@@ -1,11 +1,12 @@
 
 
-
+# Sample Video
 https://drive.google.com/file/d/14ZhdXl8R8YnR4iRoWhyCQXnj74y35QWN/view?usp=sharing
 
+<br><br><br>
 
 # Start the application :
-<br><br>
+<br>
 
 ## STEP 1 -- Clone the Application <br>
 
@@ -15,7 +16,7 @@ git clone https://github.com/wilws/quiz_challenge.git
 <br>
 <br>
 
-## STEP 2 -- Move to the  Folder <br>
+## STEP 2 -- Move to the Project Folder <br>
 
 ```
 cd quiz_challenge
@@ -40,9 +41,25 @@ npx prisma migrate dev
 ## You will be asked to name the migration:
 Enter a name for the new migration: …  (input any name you like)
 ```
+
+<br>
+Data will also be seeded in this step :
+
+
+```
+
+Running seed command `node prisma/seed/run-seed.js` ...
+Inserted 24 users records into table "user".
+Also created 3 questions records for each user (total 70 questions records were inserted into table "questions").
+
+🌱  The seed command has been executed.
+```
+
 <br><br>
 
-## STEP 5 -- Seed Data <br>
+## STEP 5 -- Seed Data (do it if seeding not happen in step 4) <br>
+
+Normally prisma will automatically seed data in step 4 above. If it is not the case, you can manually do it by following command
 
 ```
 npm run seed
@@ -50,10 +67,16 @@ npm run seed
 <br>
 <br>
 
-## STEP 7 -- Build the Application  <br>
+## STEP 6 -- Build & Start the Application  <br>
 
 ```
-npm run build & npm run start
+npm run build
+```
+
+and then
+
+```
+npm run start
 ```
 <br>
 
@@ -115,7 +138,7 @@ Though the task only requires to display the questions. But I amend it to be a s
 
 
 ## (5) - Static Site Generation (SSG) <br>
-In view page, 13 pages are pre-rendered during the build time.
+In view page, 24 pages are pre-rendered during the build time.
 
 
 
@@ -125,10 +148,12 @@ In view page, 13 pages are pre-rendered during the build time.
 
 <br><br><br><br>
 
-# Draft Design in Adobe XD Before Work
+# Draft Design in Adobe XD
 
 <img src="https://drive.google.com/uc?export=view&id=1sHUpEBPfjYUg3w5WxSvsKII4UvPUQqKQ" style="width: 650px; max-width: 100%; height: auto" title="" />
 
+<br>
+I used to make draft before code. The major tool that I use for web design is Adobe XD. Sometime I will use Photoshoop and Adobe AI for image styling. 
 
 <br>
 
