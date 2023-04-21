@@ -1,7 +1,7 @@
 
 
 
-
+https://drive.google.com/file/d/1j6xiBEgejhzJQhue76OIV5VOXhaeIlGo/view?usp=sharing
 
 
 # Start the application :
@@ -35,8 +35,8 @@ npm install
 
 ```
 npx prisma migrate dev
-
-
+```
+```
 ## You will be asked to name the migration:
 Enter a name for the new migration: …  (input any name you like)
 ```
