@@ -16,6 +16,9 @@ export const paramIdSanitiser = (id:any):number => {
 
 
 
+
+
+
 export const gradientColorGenerator = (id:number):Array<string> => {
   
   const colormMatch = [

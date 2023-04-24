@@ -67,6 +67,8 @@ export async function fetchAllQuizzes(cursor: any):Promise<resultType> {
       statusCode: 200,
       data: result,
     };
+
+     
   } catch (err) {
 
     return {

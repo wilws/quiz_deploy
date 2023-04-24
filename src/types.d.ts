@@ -15,6 +15,7 @@ type User = {
 
 
 type Quiz = {
+  message?:string;
   users: any ;
   count: number;
   cursor?: string;

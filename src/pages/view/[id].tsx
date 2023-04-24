@@ -21,6 +21,8 @@ const ViewQuiz = (props: PropsType) => {
   const router = useRouter();
   const [answerList, setAnswerList] = useState<Array<boolean>>([]);
   const [currentPage, setCurrentPage] = useState<number>(1);
+
+
   const divRef = useRef<HTMLDivElement>(null);
 
   const quiz = useQuery({
@@ -71,7 +73,7 @@ const ViewQuiz = (props: PropsType) => {
 
           <div className={style.createInfo}>
             <span className={style.creatorIntro}>
-              This Quiz is created by :{" "}
+              This Quiz is created by
             </span>
 
             <div className={style.creator}>{data?.name}</div>
@@ -109,6 +111,7 @@ const ViewQuiz = (props: PropsType) => {
           <ResultDisplay
             pageNo={questionKey}
             currentPage={currentPage}
+            question={data?.question}
             answerList={answerList}
             markingList={markingList}
           />
@@ -191,7 +194,7 @@ const style = {
   lg:pb-20
   `,
 
-  main: `grow  w-full
+  main: `grow  w-full overflow-auto
   lg:h-full lg:w-screen  lg:relative `,
 
   quizNo: `flex-none h-20 w-20 border-2 border-black flex flex-col justify-center items-center text-2xl
@@ -214,5 +217,5 @@ const style = {
    lg:fixed lg:right-0 lg:top-0 lg:invisible`,
 
   pageNoLong: `hidden 
-  lg:absolute lg:right-10 lg:top-7  lg:text-5xl lg:font-bold lg:block lg:tracking-wider`,
+  lg:fixed lg:right-10 lg:top-7  lg:text-5xl lg:font-bold lg:block lg:tracking-wider`,
 };

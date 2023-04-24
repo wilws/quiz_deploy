@@ -3,7 +3,7 @@ import { useInfiniteQuery } from "@tanstack/react-query";
 import { getQuizzes } from "../request/quiz";
 import Card from "../components/UI/Card";
 import Header from "../components/layout/Header";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useCallback } from "react";
 import  {getTotalUserNo} from "../utils/db-func";
 import { Dimmer, Loader, Segment } from "semantic-ui-react";
 
@@ -14,10 +14,8 @@ type PropsType = {
 
 export default function Home(props: PropsType) {
 
-
-
   const totalNoOfQuiz = (props?.totalNoOfQuiz) ? props?.totalNoOfQuiz : 0;
-
+  const currentFetchNo = useRef<number>(0);
   const container = useRef<HTMLHeadingElement>(null);
 
   const { data, error, fetchNextPage, isFetchingNextPage, status } =
@@ -27,27 +25,34 @@ export default function Home(props: PropsType) {
       getNextPageParam: (lastPage, pages) => lastPage.cursor,
     });
 
+  
+  const shouldLazyLoaderTriggered = useCallback(() => {
+    const travelDistance = window.innerHeight + window.pageYOffset;
+    if (!container.current) return false;
+    const triggerPoint =
+      container.current.offsetTop + container.current.offsetHeight / 1;
+    return travelDistance >= triggerPoint;
+  }, []);
 
 
-
-  let currentFetchNo = 0;
+  
   useEffect(() => {
+
     const handleScroll = async () => {
-      if (!container.current) return;
+    
+      if (currentFetchNo.current >= totalNoOfQuiz) return;
+      if (!shouldLazyLoaderTriggered()) return; 
 
-      const travelDistance = window.innerHeight + window.pageYOffset;
-      const triggerPoint =
-        container.current.offsetTop + container.current.offsetHeight / 1;
+      const { data } = await fetchNextPage();
 
-      if (travelDistance >= triggerPoint) {
-        if (currentFetchNo >= totalNoOfQuiz) return;
-
-        const { data } = await fetchNextPage();
-        if (data && data.hasOwnProperty("pages")) {
-          data.pages
-            .flatMap((data) => data.count)
-            .forEach((count) => (currentFetchNo += count));
-        }
+      if (data && data.hasOwnProperty("pages")) {
+        
+        let count = 0;
+        data.pages.forEach((page) => {
+          count += page.count;
+        });
+  
+        currentFetchNo.current = count;
       }
     };
 
@@ -55,11 +60,8 @@ export default function Home(props: PropsType) {
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
-  }, [totalNoOfQuiz]);
-
-
-
-  let quizCounter = 1;
+  }, [totalNoOfQuiz,data]);
+ 
 
   const LoadingComponent = () => {
     return (
@@ -76,13 +78,67 @@ export default function Home(props: PropsType) {
   const ErrorComponent = (props: { errorMsg: string }) => {
     return (
       <div className={style.errorPage}>
-        <h3>Ops!..Error !</h3>
+        <h3>Ops!.. !</h3>
         <pre>{props.errorMsg}</pre>
       </div>
     );
   };
 
-  // console.log(data,"<< data")
+
+  const ShowQuizzes = () => {
+
+    let quizCounter = 1;
+    console.log(error,"error");
+
+
+    if (!data) {
+      return (
+        <ErrorComponent
+          errorMsg={`Error in fetching. Probably due to database problem`}
+        />
+      );
+    } 
+
+    if (data?.pages[0]['message']) {
+      console.log(data?.pages[0]["message"]);
+      return (
+        <ErrorComponent
+          errorMsg={`${data?.pages[0]["message"]}. Probably due to database problem`}
+        />
+      );
+    } 
+
+    return (
+        <>
+          <ul className={style.ul}>
+            {data?.pages
+              .flatMap((data) => data.users)
+              .map((user) => {
+                return (
+                  <Card
+                    key={user.id}
+                    creatorName={user.name}
+                    firstQuestion={user.question[0].question}
+                    quizNo={quizCounter++}
+                    userId={user.id}
+                  />
+                );
+              })}
+          </ul>
+
+          {isFetchingNextPage && (
+            <Segment>
+              <div className={style.loader}>
+                <Dimmer active inverted>
+                <Loader inverted>Loading</Loader>
+                </Dimmer>
+              </div>
+            </Segment>
+          )}
+        </>
+    )
+  }
+
 
   return (
     <>
@@ -96,33 +152,7 @@ export default function Home(props: PropsType) {
             ) : status === "error" ? (
               <ErrorComponent errorMsg={"Error in Fetching UserData"} />
             ) : (
-              <>
-                <ul className={style.ul}>
-                  {data?.pages
-                    .flatMap((data) => data.users)
-                    .map((user) => {
-                      return (
-                        <Card
-                          key={user.id}
-                          creatorName={user.name}
-                          firstQuestion={user.question[0].question}
-                          quizNo={quizCounter++}
-                          userId={user.id}
-                        />
-                      );
-                    })}
-                </ul>
-
-                {isFetchingNextPage && (
-                  <Segment>
-                    <div className={style.loader}>
-                      <Dimmer active inverted>
-                        <Loader inverted>Loading</Loader>
-                      </Dimmer>
-                    </div>
-                  </Segment>
-                )}
-              </>
+              <ShowQuizzes />
             )}
           </main>
         </div>
@@ -135,12 +165,11 @@ export default function Home(props: PropsType) {
 // --- SSG ---//
 // Return the total no. of quiz in db
 // scrollbar stop sending request when all the quiz are fetched.
-import { fetchAllQuizzes } from "../controllers/quiz";
+
 export async function getStaticProps() {
     const totalNo = await getTotalUserNo();
     return {
       props: { 
-        // data: JSON.parse(JSON.stringify(quizzes.data)),
         totalNoOfQuiz:totalNo
       },
       revalidate: 20,  // regenerate in 20 sec
