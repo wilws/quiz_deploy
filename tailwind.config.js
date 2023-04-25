@@ -6,6 +6,9 @@ module.exports = {
       fontFamily: {
         sans: "Helvetica Neue",
       },
+      left: {
+        "1280px": "1280px",
+      },
     },
   },
   plugins: [],

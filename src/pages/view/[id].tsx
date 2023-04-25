@@ -181,7 +181,6 @@ export const getStaticPaths = async () => {
 
 
 const style = {
-
   viewPage: `w-screen h-screen flex flex-col items-center justify-center`,
 
   wrapper: `w-full h-full flex flex-col items-center overflow-hidden
@@ -202,7 +201,9 @@ const style = {
   lg:h-32 lg:w-32 lg:text-4xl  lg:border-2
  `,
 
-  createInfo: `flex-1 flex flex-col justify-center text-center border-l-2 border-r-2 border-black-100 rounded-sm tracking-wider uppercase 
+  createInfo: `flex-1 flex flex-col justify-center text-center 
+  
+  rounded-sm tracking-wider uppercase 
   md:text-4xl
   lg:border-0 lg:items-baseline lg:justify-end `,
 
@@ -217,5 +218,7 @@ const style = {
    lg:fixed lg:right-0 lg:top-0 lg:invisible`,
 
   pageNoLong: `hidden 
-  lg:fixed lg:right-10 lg:top-7  lg:text-5xl lg:font-bold lg:block lg:tracking-wider`,
+  lg:w-full lg:max-w-screen-2xl
+  lg:flex lg:flex-row lg:justify-end lg:pr-4 lg:pt-7 lg:h-20
+  lg:fixed lg:text-5xl lg:font-bold lg:block lg:tracking-wider`,
 };
